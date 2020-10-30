@@ -8,7 +8,7 @@ const Profile = () => {
   const [url, setUrl] = useState('');
   const { state, dispatch } = useContext(UserContext);
   useEffect(() => {
-    fetch('http://localhost:5000/myposts', {
+    fetch('/myposts', {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('jwt'),
       },
