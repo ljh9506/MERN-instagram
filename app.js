@@ -26,7 +26,7 @@ mongoose.connect(
   },
 );
 
-//app.js ch
+//app.js change
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
