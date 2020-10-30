@@ -1,4 +1,5 @@
 module.exports = {
-  MONGOURI: process.env.MONGOURI,
-  JWT_SECRET: process.env.JWT_SECRET,
+  MONGOURI:
+    'mongodb+srv://leejh95:wnsgml95@cluster0.ujpis.mongodb.net/react-instagram',
+  JWT_SECRET: 'secret',
 };
