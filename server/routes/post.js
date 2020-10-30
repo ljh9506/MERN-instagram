@@ -16,6 +16,19 @@ router.get('/allposts', requireLogin, (req, res) => {
     });
 });
 
+router.get('/getsubpost', requireLogin, (req, res) => {
+  Post.find({ postedBy: req.user.following })
+    .populate('postedBy', '_id name')
+    .populate('comments.postedBy', '_id name')
+    .exec()
+    .then((posts) => {
+      res.json({ posts });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.post('/createpost', requireLogin, (req, res) => {
   const { title, body, pic } = req.body;
   if (!title || !body || !pic) {
@@ -60,6 +73,7 @@ router.put('/like', requireLogin, (req, res) => {
       new: true,
     },
   )
+    .populate('postedBy', '_id name')
     .populate('comments.postedBy', '_id name')
     .exec((err, result) => {
       if (err) {
@@ -80,6 +94,7 @@ router.put('/unlike', requireLogin, (req, res) => {
       new: true,
     },
   )
+    .populate('postedBy', '_id name')
     .populate('comments.postedBy', '_id name')
     .exec((err, result) => {
       if (err) {

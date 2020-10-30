@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 const UserProfile = () => {
   const [userProfile, setProfile] = useState(null);
+  const [showFollow, setShowFollow] = useState(true);
   const { state, dispatch } = useContext(UserContext);
   const { id } = useParams();
   console.log(id);
@@ -16,7 +17,10 @@ const UserProfile = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        console.log(result.user.followers.includes(state._id));
+        if (result.user.followers.includes(state._id)) {
+          setShowFollow(false);
+        }
         setProfile(result);
       });
   }, []);
@@ -49,6 +53,42 @@ const UserProfile = () => {
             },
           };
         });
+        setShowFollow(!showFollow);
+      });
+  };
+
+  const unfollowUser = () => {
+    fetch('http://localhost:5000/unfollow', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      },
+      body: JSON.stringify({
+        unfollowId: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        dispatch({
+          type: 'UPDATE',
+          payload: { following: data.following, followers: data.followers },
+        });
+        localStorage.setItem('user', JSON.stringify(data));
+        setProfile((prevState) => {
+          const newFollower = prevState.user.followers.filter(
+            (item) => item !== data._id,
+          );
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: newFollower,
+            },
+          };
+        });
+        setShowFollow(!showFollow);
       });
   };
 
@@ -71,7 +111,7 @@ const UserProfile = () => {
                   height: '160px',
                   borderRadius: '80px',
                 }}
-                src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                src={userProfile.user.pic}
                 alt="proImg"
               />
             </div>
@@ -83,12 +123,35 @@ const UserProfile = () => {
                 <h5>{userProfile.user.followers.length} followers</h5>
                 <h5>{userProfile.user.following.length} following</h5>
               </div>
-              <button
+
+              {showFollow ? (
+                <button
+                  className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                  onClick={() => followUser()}
+                >
+                  Follow
+                </button>
+              ) : (
+                <button
+                  className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                  onClick={() => unfollowUser()}
+                >
+                  UnFollow
+                </button>
+              )}
+              {/* <button
                 className="btn waves-effect waves-light #64b5f6 blue darken-1"
                 onClick={() => followUser()}
               >
                 Follow
               </button>
+
+              <button
+                className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                onClick={() => followUser()}
+              >
+                UnFollow
+              </button> */}
             </div>
           </div>
 

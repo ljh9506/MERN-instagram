@@ -15,7 +15,7 @@ app.use(require('./routes/user'));
 
 mongoose.connect(
   'mongodb://localhost/react-instagram',
-  { useUnifiedTopology: true, useNewUrlParser: true },
+  { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false },
   (err) => {
     if (err) {
       console.log('its fucking error');

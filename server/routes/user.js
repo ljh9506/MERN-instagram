@@ -22,6 +22,25 @@ router.get('/profile/:id', requireLogin, (req, res) => {
     });
 });
 
+router.put('/updateprofile', requireLogin, (req, res) => {
+  console.log(req.body);
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    {
+      $set: { pic: req.body.pic },
+    },
+    {
+      new: true,
+    },
+    (err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      }
+      res.json(result);
+    },
+  );
+});
+
 router.put('/follow', requireLogin, (req, res) => {
   User.findByIdAndUpdate(
     req.body.followId,
