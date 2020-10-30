@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../App';
+import { Spinner } from '../spinner';
 
 const Profile = () => {
   const [data, setData] = useState([]);
@@ -44,7 +45,6 @@ const Profile = () => {
 
   useEffect(() => {
     if (url) {
-      console.log(url, '있다');
       fetch('/updateprofile', {
         method: 'put',
         headers: {
@@ -83,18 +83,24 @@ const Profile = () => {
         >
           <div>
             <img
-              style={{ width: '160px', height: '160px', borderRadius: '80px' }}
+              style={{ width: '100px', height: '100px', borderRadius: '80px' }}
               src={state ? state.pic : 'loading'}
               alt="proImg"
             />
           </div>
-          <div>
-            <h4>{state ? state.name : 'loading'}</h4>
-            <h4>{state ? state.email : 'loading'}</h4>
+          <div style={{ marginLeft: '15px' }}>
+            <h5>{state ? state.name : 'loading'}</h5>
+            <h5>{state ? state.email : 'loading'}</h5>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h5>{data.length} posts</h5>
-              <h5>{state ? state.followers.length : '0'} followers</h5>
-              <h5>{state ? state.following.length : '0'} following</h5>
+              <h6 style={{ fontWeight: 'bold', marginRight: '10px' }}>
+                {data.length} posts
+              </h6>
+              <h6 style={{ fontWeight: 'bold', marginRight: '10px' }}>
+                {state ? state.followers.length : '0'} followers
+              </h6>
+              <h6 style={{ fontWeight: 'bold', marginRight: '10px' }}>
+                {state ? state.following.length : '0'} following
+              </h6>
             </div>
           </div>
         </div>
@@ -108,18 +114,22 @@ const Profile = () => {
               onChange={(e) => updatePhoto(e.target.files[0])}
             />
           </div>
-          <div className="file-path-wrapper">
+          <div className="file-path-wrapper" style={{ opacity: '0' }}>
             <input className="file-path validate" />
           </div>
         </div>
       </div>
 
       <div className="gallery">
-        {data.map((item) => {
-          return (
-            <img className="item" src={item.photo} alt="img" key={item._id} />
-          );
-        })}
+        {data.length === 0 ? (
+          <Spinner />
+        ) : (
+          data.map((item) => {
+            return (
+              <img className="item" src={item.photo} alt="img" key={item._id} />
+            );
+          })
+        )}
       </div>
     </div>
   );

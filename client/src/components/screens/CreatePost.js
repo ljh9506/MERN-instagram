@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Spinner } from '../spinner';
 import axios from 'axios';
 import M from 'materialize-css';
 
@@ -11,6 +12,7 @@ const CreatePost = () => {
   });
   const [image, setImage] = useState('');
   const [url, setUrl] = useState('');
+  const [loading, setLoading] = useState(true);
   const { title, body } = form;
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +37,7 @@ const CreatePost = () => {
         .then((data) => {
           console.log(data);
           if (data.message) {
+            setLoading(true);
             M.toast({ html: data.message, classes: '#43a047 green darken-1' });
             history.push('/');
           } else {
@@ -48,6 +51,7 @@ const CreatePost = () => {
   }, [url]);
 
   const postDetails = () => {
+    setLoading(false);
     const data = new FormData();
     data.append('file', image);
     data.append('upload_preset', 'insta-clone');
@@ -102,6 +106,7 @@ const CreatePost = () => {
       >
         Submit Post
       </button>
+      {loading ? '' : <Spinner />}
     </div>
   );
 };
