@@ -4,6 +4,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const requireLogin = require('../middleware/requireLogin');
+const { JWT_SECRET } = require('../config/keys');
 
 router.get('/', (req, res) => {
   res.send('hello');
@@ -65,7 +66,7 @@ router.post('/signin', (req, res) => {
       .then((doMatch) => {
         if (doMatch) {
           // res.json({message:'successfully logged in'})
-          const token = jwt.sign({ _id: savedUser._id }, 'secret');
+          const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
           const { _id, name, email, followers, following, pic } = savedUser;
           res.json({
             token,

@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 5000;
+const { MONGOURI } = require('./config/keys');
 
 require('./models/user');
 require('./models/post');
@@ -14,7 +15,7 @@ app.use(require('./routes/post'));
 app.use(require('./routes/user'));
 
 mongoose.connect(
-  'mongodb://localhost/react-instagram',
+  MONGOURI,
   { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false },
   (err) => {
     if (err) {
@@ -24,10 +25,6 @@ mongoose.connect(
     }
   },
 );
-
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
