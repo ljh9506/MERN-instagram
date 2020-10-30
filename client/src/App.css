@@ -35,6 +35,8 @@ li a {
 .item {
   display: block;
   width: 30%;
+  height: 112.55px;
+  margin-top: 15px;
 }
 .home-card {
   margin: 25px auto;
@@ -48,7 +50,7 @@ li a {
 #spinner {
   position: absolute;
   left: 42%;
-  top: 47%;
+  top: 42%;
   transition: none;
   border-left: 6px solid rgba(0, 174, 239, 0.15);
   border-right: 6px solid rgba(0, 174, 239, 0.15);
