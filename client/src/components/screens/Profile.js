@@ -45,7 +45,7 @@ const Profile = () => {
   useEffect(() => {
     if (url) {
       console.log(url, '있다');
-      fetch('http://localhost:5000/updateprofile', {
+      fetch('/updateprofile', {
         method: 'put',
         headers: {
           'Content-type': 'application/json',

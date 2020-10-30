@@ -9,7 +9,7 @@ const UserProfile = () => {
   const { id } = useParams();
   console.log(id);
   useEffect(() => {
-    fetch(`http://localhost:5000/profile/${id}`, {
+    fetch(`/profile/${id}`, {
       method: 'get',
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('jwt'),
@@ -26,7 +26,7 @@ const UserProfile = () => {
   }, []);
 
   const followUser = () => {
-    fetch('http://localhost:5000/follow', {
+    fetch('/follow', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const UserProfile = () => {
   };
 
   const unfollowUser = () => {
-    fetch('http://localhost:5000/unfollow', {
+    fetch('/unfollow', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
