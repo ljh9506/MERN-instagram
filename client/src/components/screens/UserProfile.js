@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../App';
 import { useParams } from 'react-router-dom';
+import { Spinner } from '../spinner';
 
 const UserProfile = () => {
   const [userProfile, setProfile] = useState(null);
@@ -107,21 +108,27 @@ const UserProfile = () => {
             <div>
               <img
                 style={{
-                  width: '160px',
-                  height: '160px',
+                  width: '80px',
+                  height: '80px',
                   borderRadius: '80px',
                 }}
                 src={userProfile.user.pic}
                 alt="proImg"
               />
             </div>
-            <div>
-              <h4>{userProfile.user.name}</h4>
-              <h4>{userProfile.user.email}</h4>
+            <div style={{ marginLeft: '15px' }}>
+              <h5>{userProfile.user.name}</h5>
+              <h5>{userProfile.user.email}</h5>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h5>{userProfile.posts.length} posts</h5>
-                <h5>{userProfile.user.followers.length} followers</h5>
-                <h5>{userProfile.user.following.length} following</h5>
+                <h6 style={{ fontWeight: 'bold', marginRight: '15px' }}>
+                  {userProfile.posts.length} posts
+                </h6>
+                <h6 style={{ fontWeight: 'bold', marginRight: '15px' }}>
+                  {userProfile.user.followers.length} followers
+                </h6>
+                <h6 style={{ fontWeight: 'bold', marginRight: '15px' }}>
+                  {userProfile.user.following.length} following
+                </h6>
               </div>
 
               {showFollow ? (
@@ -169,7 +176,7 @@ const UserProfile = () => {
           </div>
         </div>
       ) : (
-        'Loading...'
+        <Spinner />
       )}
     </>
   );

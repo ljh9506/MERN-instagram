@@ -1,10 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const requireLogin = require('../middleware/requireLogin');
 const { JWT_SECRET } = require('../config/keys');
+const nodemailer = require('nodemailer');
+const sendGridTransport = require('nodemailer-sendgrid-transport');
+
+//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
+
+const transporter = nodemailer.createTransport(
+  sendGridTransport({
+    auth: {
+      api_key:
+        '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',
+    },
+  }),
+);
 
 router.post('/signup', (req, res) => {
   console.log(req.body);
@@ -32,6 +46,17 @@ router.post('/signup', (req, res) => {
         user
           .save()
           .then((user) => {
+            transporter
+              .sendMail({
+                to: user.email,
+                from: 'leejh95@nate.com',
+                subject: 'signup success',
+                html: `<h1>${user.name}님 가입을 환영합니다 !!</h1>`,
+              })
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => console.log(err));
             res.json({ message: 'User successfully saved' });
           })
           .catch((err) => {
@@ -72,6 +97,56 @@ router.post('/signin', (req, res) => {
         console.log(err);
       });
   });
+});
+
+router.post('/reset-password', (req, res) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err);
+    }
+    const token = buffer.toString('hex');
+    User.findOne({ email: req.body.email }).then((user) => {
+      if (!user) {
+        return res
+          .status(422)
+          .json({ error: 'User not exists with that email' });
+      }
+      user.resetToken = token;
+      user.expireToken = Date.now() + 3600000;
+      user.save().then((result) => {
+        transporter.sendMail({
+          to: user.email,
+          from: 'leejh95@nate.com',
+          subject: 'password reset',
+          html: `
+          <p>You requested for password reset</p>
+          <h5>Click in this <a href="http://localhost:3000/reset/${token}">link</a>  link to reset password</h5>
+          `,
+        });
+        res.json({ message: 'check your email' });
+      });
+    });
+  });
+});
+
+router.post('/new-password', (req, res) => {
+  const newPassword = req.body.password;
+  const sentToken = req.body.token;
+  User.findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
+    .then((user) => {
+      if (!user) {
+        return res.status(422).json({ error: 'Try Again session expired' });
+      }
+      bcrypt.hash(newPassword, 12).then((hashedpassword) => {
+        user.password = hashedpassword;
+        user.resetToken = undefined;
+        user.expireToken = undefined;
+        user.save().then((saveduser) => {
+          res.json({ message: 'password updated successfully' });
+        });
+      });
+    })
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;

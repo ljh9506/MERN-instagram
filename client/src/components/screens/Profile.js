@@ -83,7 +83,7 @@ const Profile = () => {
         >
           <div>
             <img
-              style={{ width: '100px', height: '100px', borderRadius: '80px' }}
+              style={{ width: '80px', height: '80px', borderRadius: '80px' }}
               src={state ? state.pic : 'loading'}
               alt="proImg"
             />
