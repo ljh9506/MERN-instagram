@@ -1,36 +1,53 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { UserContext } from '../App';
 import M from 'materialize-css';
 import '../App.css';
 
-document.addEventListener('DOMContentLoaded', function () {
-  var elems = document.querySelectorAll('.sidenav');
-  var instances = M.Sidenav.init(elems, 'right');
-});
-
 const Navbar = () => {
+  const searchModal = useRef(null);
+  const [search, setSearch] = useState('');
+  const [userDetails, setUserDetails] = useState([]);
   const history = useHistory();
+
+  useEffect(() => {
+    M.Modal.init(searchModal.current, {
+      onCloseStart: function () {
+        setSearch('');
+        setUserDetails([]);
+      },
+    });
+  }, []);
+
   const { state, dispatch } = useContext(UserContext);
   const renderList = () => {
     if (state) {
       return [
-        <li>
+        <li key="1">
+          <i
+            data-target="modal1"
+            className="large material-icons modal-trigger"
+            style={{ color: 'black' }}
+          >
+            search
+          </i>
+        </li>,
+        <li key="2">
           <Link to="/profile" className="sidenav-close">
             Profile
           </Link>
         </li>,
-        <li>
+        <li key="3">
           <Link to="/create" className="sidenav-close">
             Create Post
           </Link>
         </li>,
-        <li>
+        <li key="4">
           <Link to="/followingposts" className="sidenav-close">
             Following Posts
           </Link>
         </li>,
-        <li>
+        <li key="5">
           <button
             className="btn waves-effect waves-light #c62828 red darken-1"
             onClick={() => {
@@ -53,12 +70,12 @@ const Navbar = () => {
       ];
     } else {
       return [
-        <li>
+        <li key="6">
           <Link to="/login" className="sidenav-close">
             Login
           </Link>
         </li>,
-        <li>
+        <li key="7">
           <Link to="/signup" className="sidenav-close">
             Signup
           </Link>
@@ -67,33 +84,34 @@ const Navbar = () => {
     }
   };
 
-  {
-    /* <nav>
-    <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">Logo</a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">Javascript</a></li>
-        <li><a href="mobile.html">Mobile</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="sass.html">Sass</a></li>
-    <li><a href="badges.html">Components</a></li>
-    <li><a href="collapsible.html">Javascript</a></li>
-    <li><a href="mobile.html">Mobile</a></li>
-  </ul> */
-  }
+  const fetchUser = (query) => {
+    setSearch(query);
+    if (query === '') {
+      setUserDetails([]);
+      return;
+    }
+    fetch('/search-users', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+      }),
+    })
+      .then((res) => res.json())
+      .then((results) => {
+        console.log(results.user);
+        setUserDetails(results.user);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
       <nav style={{ boxShadow: 'none' }}>
         <div className="nav-wrapper white">
-          <Link to={state ? '/' : '/login'} className="brand-logo">
+          <Link to={state ? '/' : '/login'} className="brand-logo left">
             Instagram
           </Link>
           <a
@@ -109,6 +127,52 @@ const Navbar = () => {
           >
             {renderList()}
           </ul>
+        </div>
+
+        <div
+          id="modal1"
+          className="modal"
+          ref={searchModal}
+          style={{ color: 'black' }}
+        >
+          <div className="modal-content">
+            <input
+              type="text"
+              placeholder="Search User"
+              value={search}
+              onChange={(e) => fetchUser(e.target.value)}
+            />
+            <ul class="collection clear">
+              {userDetails.map((data) => {
+                return (
+                  <Link
+                    to={
+                      data._id !== state._id
+                        ? '/profile/' + data._id
+                        : '/profile'
+                    }
+                    onClick={() => {
+                      M.Modal.getInstance(searchModal.current).close();
+                    }}
+                  >
+                    <li class="collection-item">{data.email}</li>
+                  </Link>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="modal-footer">
+            <button
+              href="#!"
+              className="modal-close waves-effect waves-green btn-flat"
+              onClick={() => {
+                setUserDetails([]);
+                setSearch('');
+              }}
+            >
+              Close
+            </button>
+          </div>
         </div>
       </nav>
 

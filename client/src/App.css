@@ -47,6 +47,12 @@ li a {
   margin-right: 12px;
 }
 
+.clear {
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
+
 #spinner {
   position: absolute;
   left: 42%;

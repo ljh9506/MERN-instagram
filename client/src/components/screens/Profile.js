@@ -122,7 +122,7 @@ const Profile = () => {
 
       <div className="gallery">
         {data.length === 0 ? (
-          <Spinner />
+          <h3>게시물이 없습니다.</h3>
         ) : (
           data.map((item) => {
             return (

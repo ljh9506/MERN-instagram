@@ -100,4 +100,16 @@ router.put('/unfollow', requireLogin, (req, res) => {
   );
 });
 
+router.post('/search-users', (req, res) => {
+  let userPattern = new RegExp('^' + req.body.query);
+  User.find({ email: { $regex: userPattern } })
+    .select('_id email')
+    .then((user) => {
+      res.json({ user });
+    })
+    .catch((err) => {
+      res.status(422).json({ error: err });
+    });
+});
+
 module.exports = router;
