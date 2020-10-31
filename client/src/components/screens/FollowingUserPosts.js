@@ -198,7 +198,23 @@ const Home = () => {
           })
           .reverse()
       ) : (
-        <h4>데이터가 없습니다.</h4>
+        <div
+          style={{
+            maxWidth: '800px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: '0 auto',
+          }}
+        >
+          <img
+            src="http://cgcollege.org/Assets/images/icons/nodata-found.png"
+            alt="no-data"
+            style={{
+              width: '100%',
+            }}
+          ></img>
+        </div>
       )}
     </div>
   );

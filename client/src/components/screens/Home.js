@@ -106,22 +106,27 @@ const Home = () => {
   };
 
   const deletePost = (id) => {
-    fetch(`/deletepost/${id}`, {
-      method: 'delete',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        const newData = data.filter((item) => {
-          return item._id !== result.deletedPost._id;
-        });
-        setData(newData);
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm('정말 삭제하시겠습니까??') === true) {
+      fetch(`/deletepost/${id}`, {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+        },
       })
-      .catch((err) => console.log(err));
+        .then((res) => res.json())
+        .then((result) => {
+          console.log(result);
+          const newData = data.filter((item) => {
+            return item._id !== result.deletedPost._id;
+          });
+          setData(newData);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      return;
+    }
   };
 
   const onChange = (e) => {
@@ -138,127 +143,135 @@ const Home = () => {
       {data.length === 0 ? (
         <Spinner />
       ) : (
-        data
-          .map((item) => {
-            return (
-              <div className="card home-card" key={item._id}>
-                <div
+        data.map((item) => {
+          return (
+            <div className="card home-card" key={item._id}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Link
+                  to={`/profile/${item.postedBy._id}`}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
                   }}
                 >
-                  <Link
-                    to={`/profile/${item.postedBy._id}`}
+                  <img
+                    src={item.postedBy.pic}
+                    alt="img"
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
+                      display: 'block',
+                      width: '35px',
+                      height: '35px',
+                      borderRadius: '50%',
+                      margin: '20px 10px 20px 20px',
+                      border: '2px solid grey',
+                      overflow: 'hidden',
                     }}
+                  ></img>
+                  <h5 style={{ margin: '0' }}>{item.postedBy.name}</h5>
+                </Link>
+                {item.postedBy._id === state._id && (
+                  <i
+                    className="material-icons"
+                    style={{
+                      color: 'grey',
+                      float: 'right',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => deletePost(item._id)}
                   >
-                    <img
-                      src={item.postedBy.pic}
-                      alt="img"
-                      style={{
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '50%',
-                        margin: '20px 10px 20px 20px',
-                      }}
-                    ></img>
-                    <h5 style={{ margin: '0' }}>{item.postedBy.name}</h5>
-                  </Link>
-                  {item.postedBy._id === state._id && (
+                    delete
+                  </i>
+                )}
+              </div>
+              <div className="card-image">
+                <img src={item.photo} alt="img" />
+              </div>
+              <div className="card-content">
+                <div
+                  className="icon-content"
+                  style={{ display: 'flex', alignItems: 'center' }}
+                >
+                  <i
+                    className="material-icons"
+                    style={{ cursor: 'pointer', color: 'red' }}
+                  >
+                    favorite
+                  </i>
+                  {item.likes.includes(state._id) ? (
                     <i
                       className="material-icons"
-                      style={{
-                        color: 'grey',
-                        float: 'right',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => deletePost(item._id)}
+                      onClick={() => unlikePost(item._id)}
+                      style={{ cursor: 'pointer' }}
                     >
-                      delete
+                      thumb_down
+                    </i>
+                  ) : (
+                    <i
+                      className="material-icons"
+                      onClick={() => likePost(item._id)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      thumb_up
                     </i>
                   )}
+                  <i className="material-icons" style={{ cursor: 'pointer' }}>
+                    chat_bubble_outline
+                  </i>
                 </div>
-                <div className="card-image">
-                  <img src={item.photo} alt="img" />
-                </div>
-                <div className="card-content">
-                  <div
-                    className="icon-content"
-                    style={{ display: 'flex', alignItems: 'center' }}
-                  >
-                    <i className="material-icons">favorite_border</i>
-                    {item.likes.includes(state._id) ? (
-                      <i
-                        className="material-icons"
-                        onClick={() => unlikePost(item._id)}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        thumb_down
-                      </i>
-                    ) : (
-                      <i
-                        className="material-icons"
-                        onClick={() => likePost(item._id)}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        thumb_up
-                      </i>
-                    )}
-                    <i className="material-icons">chat_bubble_outline</i>
-                  </div>
-                  <h6 style={{ fontWeight: 'bold' }}>
-                    {item.likes.length} likes
-                  </h6>
-                  <h6>{item.title}</h6>
-                  <p>{item.body}</p>
-                  {item.comments.map((comment) => {
-                    return (
-                      <h6 key={comment._id}>
-                        <span style={{ fontWeight: '500' }}>
-                          {comment.postedBy.name}
-                        </span>{' '}
-                        {comment.text}
-                      </h6>
-                    );
-                  })}
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      makeComment(e.target[0].value, item._id);
-                      e.target[0].value = '';
+                <h6 style={{ fontWeight: 'bold' }}>
+                  {item.likes.length} likes
+                </h6>
+                <h6>{item.title}</h6>
+                <p>{item.body}</p>
+                {item.comments.map((comment) => {
+                  return (
+                    <h6 key={comment._id}>
+                      <span style={{ fontWeight: '500' }}>
+                        {comment.postedBy.name}
+                      </span>{' '}
+                      {comment.text}
+                    </h6>
+                  );
+                })}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    makeComment(e.target[0].value, item._id);
+                    e.target[0].value = '';
+                  }}
+                  onChange={(e) => onChange(e)}
+                  style={{ display: 'block', position: 'relative' }}
+                  className="home-input"
+                >
+                  <input type="text" placeholder="add a comment..." />
+                  <button
+                    style={{
+                      position: 'absolute',
+                      right: '3px',
+                      top: '0',
+                      bottom: '20%',
+                      margin: 'auto',
+                      color: '#0095f6',
+                      opacity: inputValue ? '1' : '.3',
+                      cursor: 'pointer',
+                      border: 'none',
+                      backgroundColor: 'white',
                     }}
-                    onChange={(e) => onChange(e)}
-                    style={{ display: 'block', position: 'relative' }}
-                    className="home-input"
+                    type="submit"
                   >
-                    <input type="text" placeholder="add a comment..." />
-                    <button
-                      style={{
-                        position: 'absolute',
-                        right: '3px',
-                        top: '0',
-                        bottom: '20%',
-                        margin: 'auto',
-                        color: '#0095f6',
-                        opacity: inputValue ? '1' : '.3',
-                        cursor: 'pointer',
-                        border: 'none',
-                        backgroundColor: 'white',
-                      }}
-                      type="submit"
-                    >
-                      게시
-                    </button>
-                  </form>
-                </div>
+                    게시
+                  </button>
+                </form>
               </div>
-            );
-          })
-          .reverse()
+            </div>
+          );
+        })
       )}
     </div>
   );

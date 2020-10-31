@@ -68,7 +68,7 @@ const Profile = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '0px auto' }}>
+    <div style={{ maxWidth: '800px', margin: '0px auto' }}>
       <div
         style={{
           margin: '18px 0px',
@@ -83,7 +83,7 @@ const Profile = () => {
         >
           <div>
             <img
-              style={{ width: '80px', height: '80px', borderRadius: '80px' }}
+              style={{ width: '100px', height: '100px', borderRadius: '80px' }}
               src={state ? state.pic : 'loading'}
               alt="proImg"
             />
@@ -122,7 +122,10 @@ const Profile = () => {
 
       <div className="gallery">
         {data.length === 0 ? (
-          <h3>게시물이 없습니다.</h3>
+          <img
+            src="http://cgcollege.org/Assets/images/icons/nodata-found.png"
+            alt="no-data"
+          ></img>
         ) : (
           data.map((item) => {
             return (

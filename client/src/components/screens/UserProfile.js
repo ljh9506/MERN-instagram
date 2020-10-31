@@ -102,12 +102,15 @@ const UserProfile = () => {
               display: 'flex',
               justifyContent: 'space-around',
               margin: '18px 0px',
+              paddingBottom: '30px',
+              paddingTop: '30px',
               borderBottom: '1px solid grey',
             }}
           >
             <div>
               <img
                 style={{
+                  display: 'block',
                   width: '80px',
                   height: '80px',
                   borderRadius: '80px',
@@ -117,8 +120,28 @@ const UserProfile = () => {
               />
             </div>
             <div style={{ marginLeft: '15px' }}>
-              <h5>{userProfile.user.name}</h5>
-              <h5>{userProfile.user.email}</h5>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <h5 style={{ margin: 0, marginRight: '15px' }}>
+                  {userProfile.user.name}
+                </h5>
+                {showFollow ? (
+                  <button
+                    className="btn-small waves-effect waves-light"
+                    onClick={() => followUser()}
+                    style={{ fontWeight: 'bold' }}
+                  >
+                    Follow
+                  </button>
+                ) : (
+                  <button
+                    className="btn waves-effect waves-light"
+                    onClick={() => unfollowUser()}
+                  >
+                    UnFollow
+                  </button>
+                )}
+              </div>
+              <h6>{userProfile.user.email}</h6>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h6 style={{ fontWeight: 'bold', marginRight: '15px' }}>
                   {userProfile.posts.length} posts
@@ -131,21 +154,6 @@ const UserProfile = () => {
                 </h6>
               </div>
 
-              {showFollow ? (
-                <button
-                  className="btn waves-effect waves-light #64b5f6 blue darken-1"
-                  onClick={() => followUser()}
-                >
-                  Follow
-                </button>
-              ) : (
-                <button
-                  className="btn waves-effect waves-light #64b5f6 blue darken-1"
-                  onClick={() => unfollowUser()}
-                >
-                  UnFollow
-                </button>
-              )}
               {/* <button
                 className="btn waves-effect waves-light #64b5f6 blue darken-1"
                 onClick={() => followUser()}

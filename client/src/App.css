@@ -3,6 +3,7 @@
 
 * {
   font-family: 'Noto Sans KR', sans-serif;
+  box-sizing: border-box;
 }
 
 a {
@@ -43,9 +44,10 @@ li a {
   justify-content: space-around;
 }
 .item {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
   width: 30%;
-  height: 20vw;
+  height: 15vh;
   margin-top: 15px;
 }
 .home-card {
@@ -64,6 +66,10 @@ li a {
   display: flex;
   flex-direction: column;
   color: black;
+}
+
+.btn-small {
+  background-color: #0095f6 !important;
 }
 
 #spinner {

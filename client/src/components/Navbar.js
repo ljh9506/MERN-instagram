@@ -71,7 +71,7 @@ const Navbar = () => {
             }}
             style={{
               borderRadius: '30px',
-              marginLeft: '100px',
+              marginLeft: '30px',
             }}
           >
             Logout
@@ -153,7 +153,7 @@ const Navbar = () => {
               onChange={(e) => fetchUser(e.target.value)}
               ref={searchFocus}
             />
-            <ul class="collection clear">
+            <ul className="collection clear">
               {userDetails.map((data) => {
                 return (
                   <Link
@@ -170,7 +170,7 @@ const Navbar = () => {
                       borderBottom: '1px solid lightgrey',
                     }}
                   >
-                    <li class="collection-item">{data.email}</li>
+                    <li clasName="collection-item">{data.email}</li>
                   </Link>
                 );
               })}
