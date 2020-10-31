@@ -198,20 +198,15 @@ const Home = () => {
           })
           .reverse()
       ) : (
-        <div
-          style={{
-            maxWidth: '800px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: '0 auto',
-          }}
-        >
+        <div>
           <img
             src="http://cgcollege.org/Assets/images/icons/nodata-found.png"
             alt="no-data"
             style={{
+              position: 'absolute',
+              display: 'block',
               width: '100%',
+              top: '30%',
             }}
           ></img>
         </div>

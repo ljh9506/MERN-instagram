@@ -112,4 +112,26 @@ router.post('/search-users', (req, res) => {
     });
 });
 
+router.get('/following-user', requireLogin, (req, res) => {
+  User.findOne({ _id: req.user._id })
+    .populate('following')
+    .populate('followers')
+    .select('-password')
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => console.log(err));
+});
+
+router.post('/otheruser', (req, res) => {
+  User.findOne({ _id: req.body.id })
+    .populate('following')
+    .populate('followers')
+    .select('-password')
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => console.log(err));
+});
+
 module.exports = router;

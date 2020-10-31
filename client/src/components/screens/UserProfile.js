@@ -1,14 +1,40 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { UserContext } from '../../App';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Spinner } from '../spinner';
+import M from 'materialize-css';
 
 const UserProfile = () => {
+  const followingModal = useRef(null);
+  const followerModal = useRef(null);
+  const [following, setFollowing] = useState([]);
+  const [follower, setFollower] = useState([]);
+
   const [userProfile, setProfile] = useState(null);
   const [showFollow, setShowFollow] = useState(true);
   const { state, dispatch } = useContext(UserContext);
   const { id } = useParams();
   console.log(id);
+
+  useEffect(() => {
+    M.Modal.init(followingModal.current);
+    M.Modal.init(followerModal.current);
+
+    fetch('/otheruser', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setFollowing(result.following);
+        setFollower(result.followers);
+      });
+  }, []);
+
   useEffect(() => {
     fetch(`/profile/${id}`, {
       method: 'get',
@@ -146,11 +172,19 @@ const UserProfile = () => {
                 <h6 style={{ fontWeight: 'bold', marginRight: '15px' }}>
                   {userProfile.posts.length} posts
                 </h6>
-                <h6 style={{ fontWeight: 'bold', marginRight: '15px' }}>
-                  {userProfile.user.followers.length} followers
+                <h6
+                  style={{ fontWeight: 'bold', marginRight: '10px' }}
+                  data-target="followers"
+                  className="modal-trigger"
+                >
+                  {follower ? follower.length : '0'} followers
                 </h6>
-                <h6 style={{ fontWeight: 'bold', marginRight: '15px' }}>
-                  {userProfile.user.following.length} following
+                <h6
+                  style={{ fontWeight: 'bold', marginRight: '10px' }}
+                  data-target="followings"
+                  className="modal-trigger"
+                >
+                  {following ? following.length : '0'} following
                 </h6>
               </div>
 
@@ -186,6 +220,97 @@ const UserProfile = () => {
       ) : (
         <Spinner />
       )}
+      <div id="followings" className="modal" ref={followingModal}>
+        <div className="modal-content">
+          <ul className="collection clear">
+            {following.map((data, i) => {
+              return (
+                <Link
+                  to={
+                    data._id !== state._id ? '/profile/' + data._id : '/profile'
+                  }
+                  onClick={() => {
+                    M.Modal.getInstance(followingModal.current).close();
+                  }}
+                  style={{
+                    backgroundColor: 'white',
+                    borderBottom: '1px solid lightgrey',
+                  }}
+                  key={i}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <img
+                      src={data.pic}
+                      alt="img"
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        marginRight: '10px',
+                      }}
+                    ></img>
+                    <li className="collection-item">{data.email}</li>
+                  </div>
+                </Link>
+              );
+            })}
+          </ul>
+        </div>
+        <div className="modal-footer">
+          <a
+            href="#!"
+            className="modal-close waves-effect waves-green btn-flat"
+          >
+            Agree
+          </a>
+        </div>
+      </div>
+
+      <div id="followers" className="modal" ref={followerModal}>
+        <div className="modal-content">
+          <ul className="collection clear">
+            {follower.map((data, i) => {
+              return (
+                <Link
+                  to={
+                    data._id !== state._id ? '/profile/' + data._id : '/profile'
+                  }
+                  onClick={() => {
+                    M.Modal.getInstance(followerModal.current).close();
+                  }}
+                  style={{
+                    backgroundColor: 'white',
+                    borderBottom: '1px solid lightgrey',
+                  }}
+                  key={i}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <img
+                      src={data.pic}
+                      alt="img"
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        marginRight: '10px',
+                      }}
+                    ></img>
+                    <li className="collection-item">{data.email}</li>
+                  </div>
+                </Link>
+              );
+            })}
+          </ul>
+        </div>
+        <div className="modal-footer">
+          <a
+            href="#!"
+            className="modal-close waves-effect waves-green btn-flat"
+          >
+            Agree
+          </a>
+        </div>
+      </div>
     </>
   );
 };
