@@ -4,8 +4,14 @@ import { UserContext } from '../App';
 import M from 'materialize-css';
 import '../App.css';
 
+document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('.sidenav');
+  var instances = M.Sidenav.init(elems, 'right');
+});
+
 const Navbar = () => {
   const searchModal = useRef(null);
+  const searchFocus = useRef(null);
   const [search, setSearch] = useState('');
   const [userDetails, setUserDetails] = useState([]);
   const history = useHistory();
@@ -15,6 +21,10 @@ const Navbar = () => {
       onCloseStart: function () {
         setSearch('');
         setUserDetails([]);
+      },
+      onOpenEnd: function () {
+        searchFocus.current.focus();
+        console.log('열림');
       },
     });
   }, []);
@@ -26,7 +36,7 @@ const Navbar = () => {
         <li key="1">
           <i
             data-target="modal1"
-            className="large material-icons modal-trigger"
+            className="large material-icons modal-trigger sidenav-close"
             style={{ color: 'black' }}
           >
             search
@@ -141,6 +151,7 @@ const Navbar = () => {
               placeholder="Search User"
               value={search}
               onChange={(e) => fetchUser(e.target.value)}
+              ref={searchFocus}
             />
             <ul class="collection clear">
               {userDetails.map((data) => {
@@ -153,6 +164,10 @@ const Navbar = () => {
                     }
                     onClick={() => {
                       M.Modal.getInstance(searchModal.current).close();
+                    }}
+                    style={{
+                      backgroundColor: 'white',
+                      borderBottom: '1px solid lightgrey',
                     }}
                   >
                     <li class="collection-item">{data.email}</li>
@@ -179,17 +194,6 @@ const Navbar = () => {
       <ul className="sidenav" id="mobile-demo" style={{ paddingTop: '30px' }}>
         {renderList()}
       </ul>
-
-      {/* <nav>
-        <div className="nav-wrapper white">
-          <Link to={state ? '/' : '/login'} className="brand-logo left">
-            Instagram
-          </Link>
-          <ul id="nav-mobile" className="right">
-            {renderList()}
-          </ul>
-        </div>
-      </nav> */}
     </>
   );
 };
