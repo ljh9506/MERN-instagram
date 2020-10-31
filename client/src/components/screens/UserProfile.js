@@ -44,8 +44,16 @@ const UserProfile = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result.user.followers.includes(state._id));
-        if (result.user.followers.includes(state._id)) {
+        console.log(
+          result.user.followers.includes(
+            JSON.parse(localStorage.getItem('user'))._id,
+          ),
+        );
+        if (
+          result.user.followers.includes(
+            JSON.parse(localStorage.getItem('user'))._id,
+          )
+        ) {
           setShowFollow(false);
         }
         setProfile(result);
@@ -80,6 +88,7 @@ const UserProfile = () => {
             },
           };
         });
+        console.log(userProfile.user.following, 'userProfile');
         setShowFollow(!showFollow);
       });
   };
@@ -177,14 +186,16 @@ const UserProfile = () => {
                   data-target="followers"
                   className="modal-trigger"
                 >
-                  {follower ? follower.length : '0'} followers
+                  {userProfile ? userProfile.user.followers.length : '0'}{' '}
+                  followers
                 </h6>
                 <h6
                   style={{ fontWeight: 'bold', marginRight: '10px' }}
                   data-target="followings"
                   className="modal-trigger"
                 >
-                  {following ? following.length : '0'} following
+                  {userProfile ? userProfile.user.following.length : '0'}{' '}
+                  following
                 </h6>
               </div>
 
