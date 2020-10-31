@@ -160,10 +160,10 @@ const Home = () => {
                       src={item.postedBy.pic}
                       alt="img"
                       style={{
-                        width: '30px',
-                        height: '30px',
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '50%',
-                        margin: '10px',
+                        margin: '20px 10px 20px 20px',
                       }}
                     ></img>
                     <h5 style={{ margin: '0' }}>{item.postedBy.name}</h5>
@@ -186,28 +186,33 @@ const Home = () => {
                   <img src={item.photo} alt="img" />
                 </div>
                 <div className="card-content">
-                  <i className="material-icons" style={{ color: 'red' }}>
-                    favorite
-                  </i>
-                  {item.likes.includes(state._id) ? (
-                    <i
-                      className="material-icons"
-                      onClick={() => unlikePost(item._id)}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      thumb_down
-                    </i>
-                  ) : (
-                    <i
-                      className="material-icons"
-                      onClick={() => likePost(item._id)}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      thumb_up
-                    </i>
-                  )}
-
-                  <h6>{item.likes.length} likes</h6>
+                  <div
+                    className="icon-content"
+                    style={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <i className="material-icons">favorite_border</i>
+                    {item.likes.includes(state._id) ? (
+                      <i
+                        className="material-icons"
+                        onClick={() => unlikePost(item._id)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        thumb_down
+                      </i>
+                    ) : (
+                      <i
+                        className="material-icons"
+                        onClick={() => likePost(item._id)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        thumb_up
+                      </i>
+                    )}
+                    <i className="material-icons">chat_bubble_outline</i>
+                  </div>
+                  <h6 style={{ fontWeight: 'bold' }}>
+                    {item.likes.length} likes
+                  </h6>
                   <h6>{item.title}</h6>
                   <p>{item.body}</p>
                   {item.comments.map((comment) => {
@@ -228,7 +233,7 @@ const Home = () => {
                     }}
                     onChange={(e) => onChange(e)}
                     style={{ display: 'block', position: 'relative' }}
-                    className="input-field"
+                    className="home-input"
                   >
                     <input type="text" placeholder="add a comment..." />
                     <button

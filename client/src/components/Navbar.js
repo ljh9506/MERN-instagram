@@ -37,7 +37,7 @@ const Navbar = () => {
           <i
             data-target="modal1"
             className="large material-icons modal-trigger sidenav-close"
-            style={{ color: 'black' }}
+            style={{ color: 'black', cursor: 'pointer' }}
           >
             search
           </i>
@@ -119,7 +119,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav style={{ boxShadow: 'none' }}>
+      <nav style={{ boxShadow: 'none', maxWidth: '800px', margin: '0 auto' }}>
         <div className="nav-wrapper white">
           <Link to={state ? '/' : '/login'} className="brand-logo left">
             Instagram
