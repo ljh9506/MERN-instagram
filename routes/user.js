@@ -6,6 +6,8 @@ const requireLogin = require('../middleware/requireLogin');
 
 router.get('/profile/:id', requireLogin, (req, res) => {
   User.findOne({ _id: req.params.id })
+    .populate('following')
+    .populate('followers')
     .select('-password')
     .then((user) => {
       Post.find({ postedBy: req.params.id })
@@ -23,7 +25,6 @@ router.get('/profile/:id', requireLogin, (req, res) => {
 });
 
 router.put('/updateprofile', requireLogin, (req, res) => {
-  console.log(req.body);
   User.findOneAndUpdate(
     { _id: req.user._id },
     {
@@ -42,6 +43,7 @@ router.put('/updateprofile', requireLogin, (req, res) => {
 });
 
 router.put('/follow', requireLogin, (req, res) => {
+  console.log('hi');
   User.findByIdAndUpdate(
     req.body.followId,
     {
@@ -59,11 +61,8 @@ router.put('/follow', requireLogin, (req, res) => {
         },
         { new: true },
       )
-        .populate('following')
-        .populate('followers')
         .select('-password')
         .then((result) => {
-          console.log(result);
           res.json(result);
         })
         .catch((err) => {
@@ -91,8 +90,6 @@ router.put('/unfollow', requireLogin, (req, res) => {
         },
         { new: true },
       )
-        .populate('following')
-        .populate('followers')
         .select('-password')
         .then((result) => {
           res.json(result);

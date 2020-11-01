@@ -14,25 +14,10 @@ const UserProfile = () => {
   const [showFollow, setShowFollow] = useState(true);
   const { state, dispatch } = useContext(UserContext);
   const { id } = useParams();
-  console.log(id);
 
   useEffect(() => {
     M.Modal.init(followingModal.current);
     M.Modal.init(followerModal.current);
-
-    fetch('/otheruser', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        setFollowing(result.following);
-        setFollower(result.followers);
-      });
   }, []);
 
   useEffect(() => {
@@ -49,6 +34,7 @@ const UserProfile = () => {
             JSON.parse(localStorage.getItem('user'))._id,
           ),
         );
+        console.log(result, 'ㅇㅇ');
         if (
           result.user.followers.includes(
             JSON.parse(localStorage.getItem('user'))._id,
@@ -93,6 +79,30 @@ const UserProfile = () => {
         console.log(userProfile.user.following, 'userProfile');
         setShowFollow(!showFollow);
       });
+
+    fetch(`/profile/${id}`, {
+      method: 'get',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(
+          result.user.followers.includes(
+            JSON.parse(localStorage.getItem('user'))._id,
+          ),
+        );
+        console.log(result, 'ㅇㅇ');
+        if (
+          result.user.followers.includes(
+            JSON.parse(localStorage.getItem('user'))._id,
+          )
+        ) {
+          setShowFollow(false);
+        }
+        setProfile(result);
+      });
   };
 
   const unfollowUser = () => {
@@ -129,6 +139,30 @@ const UserProfile = () => {
           };
         });
         setShowFollow(!showFollow);
+      });
+
+    fetch(`/profile/${id}`, {
+      method: 'get',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(
+          result.user.followers.includes(
+            JSON.parse(localStorage.getItem('user'))._id,
+          ),
+        );
+        console.log(result, 'ㅇㅇ');
+        if (
+          result.user.followers.includes(
+            JSON.parse(localStorage.getItem('user'))._id,
+          )
+        ) {
+          setShowFollow(false);
+        }
+        setProfile(result);
       });
   };
 
@@ -190,14 +224,16 @@ const UserProfile = () => {
                   data-target="followers"
                   className="modal-trigger"
                 >
-                  {follower ? follower.length : '0'} followers
+                  {userProfile ? userProfile.user.followers.length : '0'}{' '}
+                  followers
                 </h6>
                 <h6
                   style={{ fontWeight: 'bold', marginRight: '10px' }}
                   data-target="followings"
                   className="modal-trigger"
                 >
-                  {following ? following.length : '0'} following
+                  {userProfile ? userProfile.user.following.length : '0'}{' '}
+                  following
                 </h6>
               </div>
 
@@ -236,37 +272,41 @@ const UserProfile = () => {
       <div id="followings" className="modal" ref={followingModal}>
         <div className="modal-content">
           <ul className="collection clear">
-            {following.map((data, i) => {
-              return (
-                <Link
-                  to={
-                    data._id !== state._id ? '/profile/' + data._id : '/profile'
-                  }
-                  onClick={() => {
-                    M.Modal.getInstance(followingModal.current).close();
-                  }}
-                  style={{
-                    backgroundColor: 'white',
-                    borderBottom: '1px solid lightgrey',
-                  }}
-                  key={i}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={data.pic}
-                      alt="img"
-                      style={{
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '50%',
-                        marginRight: '10px',
+            {userProfile
+              ? userProfile.user.following.map((data, i) => {
+                  return (
+                    <Link
+                      to={
+                        data._id !== state._id
+                          ? '/profile/' + data._id
+                          : '/profile'
+                      }
+                      onClick={() => {
+                        M.Modal.getInstance(followingModal.current).close();
                       }}
-                    ></img>
-                    <li className="collection-item">{data.email}</li>
-                  </div>
-                </Link>
-              );
-            })}
+                      style={{
+                        backgroundColor: 'white',
+                        borderBottom: '1px solid lightgrey',
+                      }}
+                      key={i}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <img
+                          src={data.pic}
+                          alt="img"
+                          style={{
+                            width: '40px',
+                            height: '40px',
+                            borderRadius: '50%',
+                            marginRight: '10px',
+                          }}
+                        ></img>
+                        <li className="collection-item">{data.email}</li>
+                      </div>
+                    </Link>
+                  );
+                })
+              : 'nope'}
           </ul>
         </div>
         <div className="modal-footer">
@@ -277,37 +317,41 @@ const UserProfile = () => {
       <div id="followers" className="modal" ref={followerModal}>
         <div className="modal-content">
           <ul className="collection clear">
-            {follower.map((data, i) => {
-              return (
-                <Link
-                  to={
-                    data._id !== state._id ? '/profile/' + data._id : '/profile'
-                  }
-                  onClick={() => {
-                    M.Modal.getInstance(followerModal.current).close();
-                  }}
-                  style={{
-                    backgroundColor: 'white',
-                    borderBottom: '1px solid lightgrey',
-                  }}
-                  key={i}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={data.pic}
-                      alt="img"
-                      style={{
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '50%',
-                        marginRight: '10px',
+            {userProfile
+              ? userProfile.user.followers.map((data, i) => {
+                  return (
+                    <Link
+                      to={
+                        data._id !== state._id
+                          ? '/profile/' + data._id
+                          : '/profile'
+                      }
+                      onClick={() => {
+                        M.Modal.getInstance(followerModal.current).close();
                       }}
-                    ></img>
-                    <li className="collection-item">{data.email}</li>
-                  </div>
-                </Link>
-              );
-            })}
+                      style={{
+                        backgroundColor: 'white',
+                        borderBottom: '1px solid lightgrey',
+                      }}
+                      key={i}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <img
+                          src={data.pic}
+                          alt="img"
+                          style={{
+                            width: '40px',
+                            height: '40px',
+                            borderRadius: '50%',
+                            marginRight: '10px',
+                          }}
+                        ></img>
+                        <li className="collection-item">{data.email}</li>
+                      </div>
+                    </Link>
+                  );
+                })
+              : 'nope'}
           </ul>
         </div>
         <div className="modal-footer">
