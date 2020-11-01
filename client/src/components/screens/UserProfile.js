@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { UserContext } from '../../App';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { Spinner } from '../spinner';
 import M from 'materialize-css';
 
 const UserProfile = () => {
+  const history = useHistory();
   const followingModal = useRef(null);
   const followerModal = useRef(null);
   const [following, setFollowing] = useState([]);
@@ -35,9 +36,22 @@ const UserProfile = () => {
           ),
         );
         console.log(result, 'ㅇㅇ');
-        if (
+        console.log(
           result.user.followers.includes(
             JSON.parse(localStorage.getItem('user'))._id,
+          ),
+          'ㅋㅋ',
+        );
+        console.log(
+          result.user._id,
+          JSON.parse(localStorage.getItem('user')).followers,
+          JSON.parse(localStorage.getItem('user')).followers.includes(
+            result.user._id,
+          ),
+        );
+        if (
+          JSON.parse(localStorage.getItem('user')).following.includes(
+            result.user._id,
           )
         ) {
           setShowFollow(false);
