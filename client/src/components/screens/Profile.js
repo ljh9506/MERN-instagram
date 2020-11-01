@@ -186,7 +186,7 @@ const Profile = () => {
       <div id="followings" className="modal" ref={followingModal}>
         <div className="modal-content">
           <ul className="collection clear">
-            {userDetails.map((data, i) => {
+            {state.following.map((data, i) => {
               return (
                 <Link
                   to={
@@ -227,7 +227,7 @@ const Profile = () => {
       <div id="followers" className="modal" ref={followerModal}>
         <div className="modal-content">
           <ul className="collection clear">
-            {follower.map((data, i) => {
+            {state.followers.map((data, i) => {
               return (
                 <Link
                   to={

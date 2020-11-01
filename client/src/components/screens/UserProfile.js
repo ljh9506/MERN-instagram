@@ -76,7 +76,6 @@ const UserProfile = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.following);
         dispatch({
           type: 'UPDATE',
           payload: { following: data.following, followers: data.followers },

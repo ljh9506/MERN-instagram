@@ -74,29 +74,32 @@ router.post('/signin', (req, res) => {
   if (!email || !password) {
     res.status(422).json({ error: 'please write email or password' });
   }
-  User.findOne({ email: email }).then((savedUser) => {
-    if (!savedUser) {
-      return res.status(422).json({ error: 'Invalid email or password' });
-    }
-    bcrypt
-      .compare(password, savedUser.password)
-      .then((doMatch) => {
-        if (doMatch) {
-          // res.json({message:'successfully logged in'})
-          const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
-          const { _id, name, email, followers, following, pic } = savedUser;
-          res.json({
-            token,
-            user: { _id, name, email, followers, following, pic },
-          });
-        } else {
-          return res.status(422).json({ error: 'Invalid email or password' });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  User.findOne({ email: email })
+    .populate('following')
+    .populate('followers')
+    .then((savedUser) => {
+      if (!savedUser) {
+        return res.status(422).json({ error: 'Invalid email or password' });
+      }
+      bcrypt
+        .compare(password, savedUser.password)
+        .then((doMatch) => {
+          if (doMatch) {
+            // res.json({message:'successfully logged in'})
+            const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
+            const { _id, name, email, followers, following, pic } = savedUser;
+            res.json({
+              token,
+              user: { _id, name, email, followers, following, pic },
+            });
+          } else {
+            return res.status(422).json({ error: 'Invalid email or password' });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
 });
 
 router.post('/reset-password', (req, res) => {
