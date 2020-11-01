@@ -15,6 +15,7 @@ const UserProfile = () => {
   const followerModal = useRef(null);
   const [following, setFollowing] = useState([]);
   const [follower, setFollower] = useState([]);
+  const [btnState, setBtnState] = useState(true);
 
   const [userProfile, setProfile] = useState(null);
   const [showFollow, setShowFollow] = useState(true);
@@ -56,6 +57,8 @@ const UserProfile = () => {
   }, [id]);
 
   const followUser = () => {
+    setBtnState(false);
+
     fetch('/follow', {
       method: 'put',
       headers: {
@@ -86,6 +89,7 @@ const UserProfile = () => {
         });
         console.log(userProfile.user.following, 'userProfile');
         setShowFollow(!showFollow);
+        setBtnState(true);
       });
 
     fetch(`/profile/${id}`, {
@@ -114,6 +118,8 @@ const UserProfile = () => {
   };
 
   const unfollowUser = () => {
+    setBtnState(false);
+
     fetch('/unfollow', {
       method: 'put',
       headers: {
@@ -152,6 +158,7 @@ const UserProfile = () => {
           };
         });
         setShowFollow(!showFollow);
+        setBtnState(true);
       });
 
     fetch(`/profile/${id}`, {
@@ -215,6 +222,7 @@ const UserProfile = () => {
                     className="btn-small waves-effect waves-light"
                     onClick={() => followUser()}
                     style={{ fontWeight: 'bold' }}
+                    disabled={!btnState}
                   >
                     Follow
                   </button>
@@ -223,6 +231,7 @@ const UserProfile = () => {
                     className="btn-small waves-effect waves-light"
                     onClick={() => unfollowUser()}
                     style={{ fontWeight: 'bold' }}
+                    disabled={!btnState}
                   >
                     UnFollow
                   </button>
