@@ -4,6 +4,11 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import { Spinner } from '../spinner';
 import M from 'materialize-css';
 
+document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('.modal');
+  var instances = M.Modal.init(elems);
+});
+
 const UserProfile = () => {
   const history = useHistory();
   const followingModal = useRef(null);
@@ -19,9 +24,7 @@ const UserProfile = () => {
   useEffect(() => {
     M.Modal.init(followingModal.current);
     M.Modal.init(followerModal.current);
-  }, []);
 
-  useEffect(() => {
     fetch(`/profile/${id}`, {
       method: 'get',
       headers: {
@@ -58,7 +61,7 @@ const UserProfile = () => {
         }
         setProfile(result);
       });
-  }, []);
+  }, [id]);
 
   const followUser = () => {
     fetch('/follow', {

@@ -220,12 +220,7 @@ const Profile = () => {
           </ul>
         </div>
         <div className="modal-footer">
-          <a
-            href="#!"
-            className="modal-close waves-effect waves-green btn-flat"
-          >
-            Agree
-          </a>
+          <a className="modal-close waves-effect waves-green btn-flat">Agree</a>
         </div>
       </div>
 
@@ -266,12 +261,7 @@ const Profile = () => {
           </ul>
         </div>
         <div className="modal-footer">
-          <a
-            href="#!"
-            className="modal-close waves-effect waves-green btn-flat"
-          >
-            Agree
-          </a>
+          <a className="modal-close waves-effect waves-green btn-flat">Agree</a>
         </div>
       </div>
     </>
