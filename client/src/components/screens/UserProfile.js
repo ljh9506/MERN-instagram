@@ -73,12 +73,14 @@ const UserProfile = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log(data.following);
         dispatch({
           type: 'UPDATE',
           payload: { following: data.following, followers: data.followers },
         });
         localStorage.setItem('user', JSON.stringify(data));
+        setFollowing(data.following);
+        setFollower(data.followers);
         setProfile((prevState) => {
           return {
             ...prevState,
@@ -112,6 +114,8 @@ const UserProfile = () => {
           payload: { following: data.following, followers: data.followers },
         });
         localStorage.setItem('user', JSON.stringify(data));
+        setFollowing(data.following);
+        setFollower(data.followers);
         setProfile((prevState) => {
           const newFollower = prevState.user.followers.filter(
             (item) => item !== data._id,
@@ -186,16 +190,14 @@ const UserProfile = () => {
                   data-target="followers"
                   className="modal-trigger"
                 >
-                  {userProfile ? userProfile.user.followers.length : '0'}{' '}
-                  followers
+                  {follower ? follower.length : '0'} followers
                 </h6>
                 <h6
                   style={{ fontWeight: 'bold', marginRight: '10px' }}
                   data-target="followings"
                   className="modal-trigger"
                 >
-                  {userProfile ? userProfile.user.following.length : '0'}{' '}
-                  following
+                  {following ? following.length : '0'} following
                 </h6>
               </div>
 
@@ -268,12 +270,7 @@ const UserProfile = () => {
           </ul>
         </div>
         <div className="modal-footer">
-          <a
-            href="#!"
-            className="modal-close waves-effect waves-green btn-flat"
-          >
-            Agree
-          </a>
+          <a className="modal-close waves-effect waves-green btn-flat">Agree</a>
         </div>
       </div>
 
@@ -314,12 +311,7 @@ const UserProfile = () => {
           </ul>
         </div>
         <div className="modal-footer">
-          <a
-            href="#!"
-            className="modal-close waves-effect waves-green btn-flat"
-          >
-            Agree
-          </a>
+          <a className="modal-close waves-effect waves-green btn-flat">Agree</a>
         </div>
       </div>
     </>
