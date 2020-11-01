@@ -21,6 +21,7 @@ const Profile = () => {
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
+    console.log(state, '스테이트');
     M.Modal.init(followingModal.current);
     M.Modal.init(followerModal.current);
 

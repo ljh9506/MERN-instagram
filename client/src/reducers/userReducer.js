@@ -8,6 +8,12 @@ export const reducer = (state, action) => {
     return null;
   }
   if (action.type === 'UPDATE') {
+    if (state.following.includes(action.payload.following)) {
+      return;
+    }
+    if (state.followers.includes(action.payload.followers)) {
+      return;
+    }
     return {
       ...state,
       followers: action.payload.followers,

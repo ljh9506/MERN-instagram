@@ -61,6 +61,8 @@ router.put('/follow', requireLogin, (req, res) => {
         },
         { new: true },
       )
+        .populate('followers')
+        .populate('following')
         .select('-password')
         .then((result) => {
           res.json(result);
@@ -90,6 +92,8 @@ router.put('/unfollow', requireLogin, (req, res) => {
         },
         { new: true },
       )
+        .populate('followers')
+        .populate('following')
         .select('-password')
         .then((result) => {
           res.json(result);

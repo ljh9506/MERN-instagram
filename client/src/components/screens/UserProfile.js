@@ -28,6 +28,7 @@ const UserProfile = () => {
     fetch(`/profile/${id}`, {
       method: 'get',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('jwt'),
       },
     })
@@ -45,20 +46,11 @@ const UserProfile = () => {
           ),
           'ㅋㅋ',
         );
-        console.log(
-          result.user._id,
-          JSON.parse(localStorage.getItem('user')).followers,
-          JSON.parse(localStorage.getItem('user')).followers.includes(
-            result.user._id,
-          ),
-        );
-        if (
-          JSON.parse(localStorage.getItem('user')).following.includes(
-            result.user._id,
-          )
-        ) {
-          setShowFollow(false);
-        }
+        JSON.parse(localStorage.getItem('user')).following.forEach((p) => {
+          if (p._id === result.user._id) {
+            setShowFollow(false);
+          }
+        });
         setProfile(result);
       });
   }, [id]);
@@ -223,8 +215,9 @@ const UserProfile = () => {
                   </button>
                 ) : (
                   <button
-                    className="btn waves-effect waves-light"
+                    className="btn-small waves-effect waves-light"
                     onClick={() => unfollowUser()}
+                    style={{ fontWeight: 'bold' }}
                   >
                     UnFollow
                   </button>
