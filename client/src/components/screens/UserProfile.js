@@ -80,7 +80,7 @@ const UserProfile = () => {
             ...prevState,
             user: {
               ...prevState.user,
-              followers: [...prevState.user.followers, data._id],
+              followers: [...prevState.user.followers, data],
             },
           };
         });
