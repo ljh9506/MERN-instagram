@@ -135,9 +135,14 @@ const UserProfile = () => {
         setFollowing(data.following);
         setFollower(data.followers);
         setProfile((prevState) => {
-          const newFollower = prevState.user.followers.filter(
-            (item) => item !== data._id,
-          );
+          const arr = [];
+          prevState.user.followers.forEach((p) => {
+            arr.push(p._id);
+          });
+          const newFollower = arr.filter((item) => {
+            return item !== data._id;
+          });
+
           return {
             ...prevState,
             user: {
