@@ -1,17 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { Spinner } from '../spinner';
 
 const Home = () => {
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [fetching, setFetching] = useState(true);
+  const [fetchBlock, setFetchBlock] = useState(true);
   const [inputValue, setInputValue] = useState(false);
   const { state, dispatch } = useContext(UserContext);
+  let dataPage = useRef(1);
 
-  useEffect(() => {}, []);
+  const fetchData = async () => {
+    console.log(dataPage.current);
+    if (dataPage.current >= 2) {
+      setLoading(true);
+    }
 
-  useEffect(() => {
-    fetch('/allposts', {
+    setFetching(true);
+
+    await fetch(`/allposts?p=${dataPage.current}`, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('jwt'),
       },
@@ -19,8 +28,46 @@ const Home = () => {
       .then((res) => res.json())
       .then((result) => {
         console.log(result.posts);
-        setData(result.posts);
+        console.log(dataPage.current);
+        if (result.posts.length === 0) {
+          dataPage.current--;
+          setFetchBlock(false);
+          return;
+        }
+        const mergedData = data.concat(...result.posts);
+        setData(mergedData);
       });
+    setFetching(false);
+    setLoading(false);
+  };
+
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    // console.log(scrollHeight, scrollTop + clientHeight);
+    if (
+      scrollTop + clientHeight + 100 >= scrollHeight &&
+      fetching === false &&
+      fetchBlock
+    ) {
+      // 페이지 끝에 도달하면 추가 데이터를 받아온다
+      dataPage.current++;
+      fetchData();
+    }
+  };
+
+  useEffect(() => {
+    // scroll event listener 등록
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      // scroll event listener 해제
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const likePost = (id) => {
@@ -273,6 +320,13 @@ const Home = () => {
           );
         })
       )}
+      <div style={{ margin: '0 auto' }}>
+        <img
+          className={loading ? 'show' : 'hidden'}
+          src="https://icons-for-free.com/iconfiles/png/512/instagram+icon+instagram+logo+logo+icon-1320184050987950067.png"
+          alt="loading"
+        ></img>
+      </div>
     </div>
   );
 };

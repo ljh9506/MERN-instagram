@@ -72,6 +72,18 @@ li a {
   background-color: #0095f6 !important;
 }
 
+.show {
+  display: block;
+  margin: 0 auto;
+  background-color: white;
+  color: white;
+  width: 80px;
+  height: 80px;
+}
+.hidden {
+  display: none;
+}
+
 #spinner {
   position: absolute;
   left: 42%;

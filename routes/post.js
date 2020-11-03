@@ -4,10 +4,14 @@ const Post = require('../models/post');
 const requireLogin = require('../middleware/requireLogin');
 
 router.get('/allposts', requireLogin, (req, res) => {
+  console.log(req.query.p);
+  const p = req.query.p ? req.query.p : 1;
   Post.find()
     .populate('postedBy', '_id name pic')
     .populate('comments.postedBy', '_id name')
     .sort('-createdAt')
+    .skip((p - 1) * 2)
+    .limit(2)
     .exec()
     .then((posts) => {
       res.json({ posts });
