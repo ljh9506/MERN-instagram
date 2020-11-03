@@ -5,7 +5,9 @@
   font-family: 'Noto Sans KR', sans-serif;
   box-sizing: border-box;
 }
-
+body {
+  background-color: #fafafa;
+}
 a {
   color: #000 !important;
 }
@@ -14,6 +16,9 @@ h5 {
 }
 li a {
   font-size: 14px !important;
+}
+.white {
+  background-color: #fafafa !important;
 }
 .brand-logo {
   font-family: 'Grand Hotel', cursive;
@@ -49,6 +54,10 @@ li a {
   width: 30%;
   height: 15vh;
   margin-top: 15px;
+}
+.card {
+  box-shadow: none;
+  border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
 }
 .home-card {
   margin: 25px auto;
