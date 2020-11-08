@@ -63,7 +63,6 @@ li a {
 .card {
   box-shadow: none;
   border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
-  border-radius: 12px;
 }
 .home-card {
   margin: 25px auto;
@@ -85,7 +84,6 @@ li a {
 
 .btn-small {
   background-color: #0095f6 !important;
-  width: 320px !important;
   height: 50px !important;
   margin: 20px 0;
 }

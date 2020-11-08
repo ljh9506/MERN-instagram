@@ -94,6 +94,7 @@ const Signup = () => {
             maxWidth: '300px',
             backgroundColor: '#fafafa',
             border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+            marginBottom: '14px',
             paddingLeft: '12px',
           }}
         />
@@ -107,6 +108,7 @@ const Signup = () => {
             maxWidth: '300px',
             backgroundColor: '#fafafa',
             border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+            marginBottom: '14px',
             paddingLeft: '12px',
           }}
         />
@@ -120,6 +122,7 @@ const Signup = () => {
             maxWidth: '300px',
             backgroundColor: '#fafafa',
             border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+            marginBottom: '14px',
             paddingLeft: '12px',
           }}
         />
@@ -142,6 +145,7 @@ const Signup = () => {
           onClick={() => PostData()}
           style={{
             fontWeight: 'bold',
+            width: '100%',
           }}
         >
           Signup
@@ -152,8 +156,9 @@ const Signup = () => {
             style={{
               marginTop: '20px',
               display: 'block',
-              padding: '20px 60px',
+              padding: '20px 70px',
               border: '1px solid lightgrey',
+              marginBottom: '14px',
               fontWeight: 'bold',
             }}
           >

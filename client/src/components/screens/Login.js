@@ -42,7 +42,10 @@ const Login = () => {
           localStorage.setItem('jwt', data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
           dispatch({ type: 'USER', payload: data.user });
-          M.toast({ html: 'login success', classes: '#43a047 green darken-1' });
+          M.toast({
+            html: 'Login success',
+            classes: '#03a9f4 light-blue center ',
+          });
           history.push('/');
         }
       })
@@ -66,6 +69,7 @@ const Login = () => {
             backgroundColor: '#fafafa',
             border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
             paddingLeft: '12px',
+            marginBottom: '14px',
           }}
         />
         <input
@@ -86,6 +90,7 @@ const Login = () => {
           onClick={() => PostData()}
           style={{
             fontWeight: 'bold',
+            width: '100%',
           }}
         >
           Login
@@ -107,7 +112,7 @@ const Login = () => {
               style={{
                 marginTop: '20px',
                 display: 'block',
-                padding: '20px 60px',
+                padding: '20px 80px',
                 border: '1px solid lightgrey',
                 fontWeight: 'bold',
               }}
