@@ -56,10 +56,10 @@ const UserProfile = () => {
       });
   }, [id]);
 
-  const followUser = () => {
+  const followUser = async () => {
     setBtnState(false);
 
-    fetch('/follow', {
+    await fetch('/follow', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -117,10 +117,10 @@ const UserProfile = () => {
       });
   };
 
-  const unfollowUser = () => {
+  const unfollowUser = async () => {
     setBtnState(false);
 
-    fetch('/unfollow', {
+    await fetch('/unfollow', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -148,6 +148,7 @@ const UserProfile = () => {
           const newFollower = arr.filter((item) => {
             return item !== data._id;
           });
+          console.log(newFollower, 'newfoll');
 
           return {
             ...prevState,
@@ -169,12 +170,6 @@ const UserProfile = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(
-          result.user.followers.includes(
-            JSON.parse(localStorage.getItem('user'))._id,
-          ),
-        );
-        console.log(result, 'ㅇㅇ');
         if (
           result.user.followers.includes(
             JSON.parse(localStorage.getItem('user'))._id,

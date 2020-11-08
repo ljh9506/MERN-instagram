@@ -127,7 +127,7 @@ const Home = () => {
           .map((item) => {
             return (
               <div className="card home-card" key={item._id}>
-                <h5>
+                <h5 style={{ margin: '20px 0 20px 20px' }}>
                   <Link to={`/profile/${item.postedBy._id}`}>
                     {item.postedBy.name}
                   </Link>

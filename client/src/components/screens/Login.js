@@ -61,6 +61,12 @@ const Login = () => {
           placeholder="email"
           value={email}
           onChange={onChange}
+          style={{
+            maxWidth: '300px',
+            backgroundColor: '#fafafa',
+            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+            paddingLeft: '12px',
+          }}
         />
         <input
           name="password"
@@ -68,19 +74,48 @@ const Login = () => {
           placeholder="password"
           value={password}
           onChange={onChange}
+          style={{
+            maxWidth: '300px',
+            backgroundColor: '#fafafa',
+            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+            paddingLeft: '12px',
+          }}
         />
         <button
-          className="btn waves-effect waves-light #64b5f6 blue darken-1"
+          className="btn-small waves-effect waves-light #64b5f6 blue darken-1"
           onClick={() => PostData()}
+          style={{
+            fontWeight: 'bold',
+          }}
         >
           Login
         </button>
-        <h5>
-          <Link to="/signup">Don't have an account?</Link>
-        </h5>
-        <h5>
-          <Link to="/reset">Forgot the Password?</Link>
-        </h5>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
+          <h6>
+            <Link to="/reset">Forgot the Password?</Link>
+          </h6>
+
+          <div>
+            <Link
+              to="/signup"
+              style={{
+                marginTop: '20px',
+                display: 'block',
+                padding: '20px 60px',
+                border: '1px solid lightgrey',
+                fontWeight: 'bold',
+              }}
+            >
+              Don't have an account?
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

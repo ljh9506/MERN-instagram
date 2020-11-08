@@ -90,6 +90,12 @@ const Signup = () => {
           placeholder="name"
           value={name}
           onChange={onChange}
+          style={{
+            maxWidth: '300px',
+            backgroundColor: '#fafafa',
+            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+            paddingLeft: '12px',
+          }}
         />
         <input
           name="email"
@@ -97,6 +103,12 @@ const Signup = () => {
           placeholder="email"
           value={email}
           onChange={onChange}
+          style={{
+            maxWidth: '300px',
+            backgroundColor: '#fafafa',
+            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+            paddingLeft: '12px',
+          }}
         />
         <input
           name="password"
@@ -104,14 +116,21 @@ const Signup = () => {
           placeholder="password"
           value={password}
           onChange={onChange}
+          style={{
+            maxWidth: '300px',
+            backgroundColor: '#fafafa',
+            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+            paddingLeft: '12px',
+          }}
         />
         <div className="file-field input-field">
           <div className="btn #64b5f6 blue darken-1">
-            <span>Upload profile Image</span>
+            <span>profile Image</span>
             <input
               type="file"
               name="image"
               onChange={(e) => setImage(e.target.files[0])}
+              style={{ maxWidth: '100px !important' }}
             />
           </div>
           <div className="file-path-wrapper">
@@ -119,14 +138,28 @@ const Signup = () => {
           </div>
         </div>
         <button
-          className="btn waves-effect waves-light #64b5f6 blue darken-1"
+          className="btn-small waves-effect waves-light #64b5f6 blue darken-1"
           onClick={() => PostData()}
+          style={{
+            fontWeight: 'bold',
+          }}
         >
           Signup
         </button>
-        <h5>
-          <Link to="/login">Already have an account?</Link>
-        </h5>
+        <div>
+          <Link
+            to="/login"
+            style={{
+              marginTop: '20px',
+              display: 'block',
+              padding: '20px 60px',
+              border: '1px solid lightgrey',
+              fontWeight: 'bold',
+            }}
+          >
+            Already have an account?
+          </Link>
+        </div>
       </div>
     </div>
   );
