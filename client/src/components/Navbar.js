@@ -132,7 +132,13 @@ const Navbar = () => {
 
   return (
     <>
-      <nav style={{ boxShadow: 'none', maxWidth: '800px', margin: '0 auto' }}>
+      <nav
+        style={{
+          boxShadow: 'none',
+          maxWidth: '800px',
+          margin: '0 auto',
+        }}
+      >
         <div className="nav-wrapper white">
           <Link to={state ? '/' : '/login'} className="brand-logo left">
             Instagram

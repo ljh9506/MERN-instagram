@@ -89,7 +89,7 @@ input[type='text']:not(.browser-default):focus:not([readonly]) {
 
 .btn-small {
   background-color: #0095f6 !important;
-  height: 50px !important;
+  height: 40px !important;
   margin: 20px 0;
 }
 

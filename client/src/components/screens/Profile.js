@@ -122,7 +122,8 @@ const Profile = () => {
                 alt="proImg"
               />
             </div>
-            <div style={{ marginLeft: '15px' }}>
+
+            {/* <div style={{ marginLeft: '15px' }}>
               <h5>{state ? state.name : 'loading'}</h5>
               <h5>{state ? state.email : 'loading'}</h5>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -144,9 +145,84 @@ const Profile = () => {
                   {state ? state.following.length : '0'} following
                 </h6>
               </div>
+            </div> */}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              borderBottom: '1px solid lightgrey',
+              borderTop: '1px solid lightgrey',
+              padding: '10px 0',
+              margin: '20px 0',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                fontWeight: 'bold',
+                alignItems: 'center',
+              }}
+            >
+              <h6
+                style={{ fontWeight: 'bold' }}
+                data-target="followers"
+                className="modal-trigger"
+              >
+                <span style={{ color: 'grey' }}>posts</span>
+              </h6>
+              <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                {data.length}
+              </span>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                fontWeight: 'bold',
+                alignItems: 'center',
+              }}
+            >
+              <h6
+                style={{ fontWeight: 'bold' }}
+                data-target="followers"
+                className="modal-trigger"
+              >
+                <span style={{ color: 'grey' }}>followers</span>
+              </h6>
+              <span
+                data-target="followers"
+                className="modal-trigger"
+                style={{ fontSize: '16px', fontWeight: 'bold' }}
+              >
+                {state ? state.followers.length : '0'}{' '}
+              </span>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                fontWeight: 'bold',
+                alignItems: 'center',
+              }}
+            >
+              <h6
+                style={{ fontWeight: 'bold' }}
+                data-target="followings"
+                className="modal-trigger"
+              >
+                <span style={{ color: 'grey' }}>following</span>
+              </h6>
+              <span
+                data-target="followings"
+                className="modal-trigger"
+                style={{ fontSize: '16px', fontWeight: 'bold' }}
+              >
+                {state ? state.following.length : '0'}
+              </span>
             </div>
           </div>
-
           <div className="file-field input-field">
             <div className="btn #64b5f6 blue darken-1">
               <span>Update profile Image</span>
@@ -221,7 +297,9 @@ const Profile = () => {
           </ul>
         </div>
         <div className="modal-footer">
-          <a className="modal-close waves-effect waves-green btn-flat">Agree</a>
+          <a className="modal-close btn-flat" style={{ fontWeight: 'bold' }}>
+            Close
+          </a>
         </div>
       </div>
 
@@ -262,7 +340,9 @@ const Profile = () => {
           </ul>
         </div>
         <div className="modal-footer">
-          <a className="modal-close waves-effect waves-green btn-flat">Agree</a>
+          <a className="modal-close btn-flat" style={{ fontWeight: 'bold' }}>
+            Close
+          </a>
         </div>
       </div>
     </>

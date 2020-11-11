@@ -190,12 +190,17 @@ const UserProfile = () => {
               display: 'flex',
               justifyContent: 'space-around',
               margin: '18px 0px',
-              paddingBottom: '30px',
               paddingTop: '30px',
-              borderBottom: '1px solid grey',
             }}
           >
-            <div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
               <img
                 style={{
                   display: 'block',
@@ -206,6 +211,7 @@ const UserProfile = () => {
                 src={userProfile.user.pic}
                 alt="proImg"
               />
+              <h6 style={{ fontWeight: 'bold' }}>{userProfile.user.email}</h6>
             </div>
             <div style={{ marginLeft: '15px' }}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -232,42 +238,81 @@ const UserProfile = () => {
                   </button>
                 )}
               </div>
-              <h6>{userProfile.user.email}</h6>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h6 style={{ fontWeight: 'bold', marginRight: '15px' }}>
-                  {userProfile.posts.length} posts
-                </h6>
-                <h6
-                  style={{ fontWeight: 'bold', marginRight: '10px' }}
-                  data-target="followers"
-                  className="modal-trigger"
-                >
-                  {userProfile ? userProfile.user.followers.length : '0'}{' '}
-                  followers
-                </h6>
-                <h6
-                  style={{ fontWeight: 'bold', marginRight: '10px' }}
-                  data-target="followings"
-                  className="modal-trigger"
-                >
-                  {userProfile ? userProfile.user.following.length : '0'}{' '}
-                  following
-                </h6>
-              </div>
+            </div>
+          </div>
 
-              {/* <button
-                className="btn waves-effect waves-light #64b5f6 blue darken-1"
-                onClick={() => followUser()}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              borderBottom: '1px solid lightgrey',
+              borderTop: '1px solid lightgrey',
+              padding: '10px 0',
+              margin: '10px 0',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                fontWeight: 'bold',
+                alignItems: 'center',
+              }}
+            >
+              <h6
+                style={{ fontWeight: 'bold' }}
+                data-target="followers"
+                className="modal-trigger"
               >
-                Follow
-              </button>
-
-              <button
-                className="btn waves-effect waves-light #64b5f6 blue darken-1"
-                onClick={() => followUser()}
+                <span style={{ color: 'grey' }}>posts</span>
+              </h6>
+              {userProfile.posts.length}
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                fontWeight: 'bold',
+                alignItems: 'center',
+              }}
+            >
+              <h6
+                style={{ fontWeight: 'bold' }}
+                data-target="followers"
+                className="modal-trigger"
               >
-                UnFollow
-              </button> */}
+                <span style={{ color: 'grey' }}>followers</span>
+              </h6>
+              <span
+                data-target="followers"
+                className="modal-trigger"
+                style={{ fontSize: '16px', fontWeight: 'bold' }}
+              >
+                {userProfile ? userProfile.user.followers.length : '0'}{' '}
+              </span>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                fontWeight: 'bold',
+                alignItems: 'center',
+              }}
+            >
+              <h6
+                style={{ fontWeight: 'bold' }}
+                data-target="followings"
+                className="modal-trigger"
+              >
+                <span style={{ color: 'grey' }}>following</span>
+              </h6>
+              <span
+                data-target="followers"
+                className="modal-trigger"
+                style={{ fontSize: '16px', fontWeight: 'bold' }}
+              >
+                {userProfile ? userProfile.user.following.length : '0'}
+              </span>
             </div>
           </div>
 
@@ -285,7 +330,9 @@ const UserProfile = () => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <div className="spinner-container">
+          <Spinner />
+        </div>
       )}
       <div id="followings" className="modal" ref={followingModal}>
         <div className="modal-content">
@@ -304,7 +351,7 @@ const UserProfile = () => {
                       }}
                       style={{
                         backgroundColor: 'white',
-                        borderBottom: '1px solid lightgrey',
+                        borderBottom: '1px solid black',
                       }}
                       key={i}
                     >
@@ -328,7 +375,9 @@ const UserProfile = () => {
           </ul>
         </div>
         <div className="modal-footer">
-          <a className="modal-close waves-effect waves-green btn-flat">Agree</a>
+          <a className="modal-close btn-flat" style={{ fontWeight: 'bold' }}>
+            Close
+          </a>
         </div>
       </div>
 
@@ -373,7 +422,9 @@ const UserProfile = () => {
           </ul>
         </div>
         <div className="modal-footer">
-          <a className="modal-close waves-effect waves-green btn-flat">Agree</a>
+          <a className="modal-close btn-flat" style={{ fontWeight: 'bold' }}>
+            Close
+          </a>
         </div>
       </div>
     </>
