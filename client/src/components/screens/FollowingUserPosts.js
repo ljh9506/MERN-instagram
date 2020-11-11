@@ -206,7 +206,9 @@ const Home = () => {
               position: 'absolute',
               display: 'block',
               width: '100%',
-              top: '30%',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%,-50%)',
             }}
           ></img>
         </div>

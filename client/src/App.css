@@ -105,10 +105,17 @@ input[type='text']:not(.browser-default):focus:not([readonly]) {
   display: none;
 }
 
-#spinner {
+.spinner-container {
   position: absolute;
-  left: 42%;
-  top: 42%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#spinner {
   transition: none;
   border-left: 6px solid rgba(0, 174, 239, 0.15);
   border-right: 6px solid rgba(0, 174, 239, 0.15);

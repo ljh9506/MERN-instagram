@@ -123,6 +123,10 @@ const Home = () => {
   };
 
   const makeComment = (text, postId) => {
+    if (!inputValue) {
+      alert('내용을 입력하세요');
+      return;
+    }
     fetch('/comment', {
       method: 'put',
       headers: {
@@ -150,6 +154,7 @@ const Home = () => {
         }
       })
       .catch((err) => console.log(err));
+    setInputValue(false);
   };
 
   const deletePost = (id) => {
@@ -177,10 +182,11 @@ const Home = () => {
   };
 
   const onChange = (e) => {
-    if (e.target.value) {
-      setInputValue(true);
-    } else {
+    console.log(e.target.value.length);
+    if (e.target.value.length === 0) {
       setInputValue(false);
+    } else {
+      setInputValue(true);
     }
     console.log(inputValue);
   };
@@ -189,7 +195,9 @@ const Home = () => {
     <>
       <div className="home">
         {data.length === 0 ? (
-          <Spinner />
+          <div className="spinner-container">
+            <Spinner />
+          </div>
         ) : (
           data.map((item) => {
             return (
@@ -288,6 +296,7 @@ const Home = () => {
                           alignItems: 'center',
                           marginTop: '5px',
                         }}
+                        key={comment._id}
                       >
                         <Link
                           to={`/profile/${comment.postedBy._id}`}
