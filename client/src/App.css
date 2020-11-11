@@ -48,6 +48,11 @@ li a {
   box-shadow: none !important;
 }
 
+input[type='text']:not(.browser-default):focus:not([readonly]) {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
 .gallery {
   display: flex;
   flex-wrap: wrap;

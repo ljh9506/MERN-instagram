@@ -34,13 +34,26 @@ const Navbar = () => {
     if (state) {
       return [
         <li key="1">
-          <i
+          <div
             data-target="modal1"
-            className="large material-icons modal-trigger sidenav-close"
-            style={{ color: 'black', cursor: 'pointer' }}
+            className="small material-icons modal-trigger sidenav-close"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '14px',
+              width: '150px',
+            }}
           >
-            search
-          </i>
+            <i
+              data-target="modal1"
+              className="small material-icons modal-trigger sidenav-close"
+              style={{ color: 'black', cursor: 'pointer' }}
+            >
+              search
+            </i>
+            <span>Find User</span>
+          </div>
         </li>,
         <li key="2">
           <Link to="/profile" className="sidenav-close">
@@ -143,7 +156,7 @@ const Navbar = () => {
           id="modal1"
           className="modal"
           ref={searchModal}
-          style={{ color: 'black' }}
+          style={{ color: 'black', borderRadius: '20px' }}
         >
           <div className="modal-content">
             <input
@@ -152,8 +165,9 @@ const Navbar = () => {
               value={search}
               onChange={(e) => fetchUser(e.target.value)}
               ref={searchFocus}
+              style={{ borderBottom: 'none !important' }}
             />
-            <ul className="collection clear">
+            <ul className="collection clear" style={{ margin: '0' }}>
               {userDetails.map((data) => {
                 return (
                   <Link
@@ -170,7 +184,22 @@ const Navbar = () => {
                       borderBottom: '1px solid lightgrey',
                     }}
                   >
-                    <li clasName="collection-item">{data.email}</li>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <img
+                        src={data.pic}
+                        alt="img"
+                        style={{
+                          display: 'block',
+                          width: '25px',
+                          height: '25px',
+                          borderRadius: '50%',
+                          margin: '5px 10px 5px 0',
+                          border: '2px solid grey',
+                          overflow: 'hidden',
+                        }}
+                      />
+                      <li clasName="collection-item">{data.email}</li>
+                    </div>
                   </Link>
                 );
               })}
@@ -179,11 +208,12 @@ const Navbar = () => {
           <div className="modal-footer">
             <button
               href="#!"
-              className="modal-close waves-effect waves-green btn-flat"
+              className="modal-close  btn-flat"
               onClick={() => {
                 setUserDetails([]);
                 setSearch('');
               }}
+              style={{ fontWeight: 'bold' }}
             >
               Close
             </button>

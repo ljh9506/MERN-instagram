@@ -8,7 +8,7 @@ router.get('/allposts', requireLogin, (req, res) => {
   const p = req.query.p ? req.query.p : 1;
   Post.find()
     .populate('postedBy', '_id name pic')
-    .populate('comments.postedBy', '_id name')
+    .populate('comments.postedBy', '_id name pic')
     .sort('-createdAt')
     .skip((p - 1) * 2)
     .limit(2)
@@ -124,7 +124,7 @@ router.put('/comment', requireLogin, (req, res) => {
       new: true,
     },
   )
-    .populate('comments.postedBy', '_id name')
+    .populate('comments.postedBy', '_id name pic')
     .populate('postedBy', '_id name pic')
     .exec((err, result) => {
       if (err) {

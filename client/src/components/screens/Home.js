@@ -230,6 +230,7 @@ const Home = () => {
                         color: 'grey',
                         float: 'right',
                         cursor: 'pointer',
+                        marginRight: '20px',
                       }}
                       onClick={() => deletePost(item._id)}
                     >
@@ -275,16 +276,57 @@ const Home = () => {
                   <h6 style={{ fontWeight: 'bold' }}>
                     {item.likes.length} likes
                   </h6>
-                  <h6>{item.title}</h6>
-                  <p>{item.body}</p>
+                  <h5 style={{ fontWeight: 'bold' }}>{item.title}</h5>
+                  <h6 style={{ margin: '20px 0', fontSize: '18px' }}>
+                    {item.body}
+                  </h6>
                   {item.comments.map((comment) => {
                     return (
-                      <h6 key={comment._id}>
-                        <span style={{ fontWeight: '500' }}>
-                          {comment.postedBy.name}
-                        </span>{' '}
-                        {comment.text}
-                      </h6>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          marginTop: '5px',
+                        }}
+                      >
+                        <Link
+                          to={`/profile/${comment.postedBy._id}`}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <div className="card-image">
+                            <img
+                              src={comment.postedBy.pic}
+                              alt="img"
+                              style={{
+                                display: 'block',
+                                width: '25px',
+                                height: '25px',
+                                borderRadius: '50%',
+                                margin: '5px 10px 5px 0',
+                                border: '2px solid grey',
+                                overflow: 'hidden',
+                              }}
+                            />
+                          </div>
+                          <h6
+                            key={comment._id}
+                            style={{ margin: '0 10px 0 0' }}
+                          >
+                            <span
+                              style={{
+                                fontWeight: 'bold',
+                                marginRight: '10px',
+                              }}
+                            >
+                              {comment.postedBy.name}
+                            </span>{' '}
+                            {comment.text}
+                          </h6>
+                        </Link>
+                      </div>
                     );
                   })}
                   <form
