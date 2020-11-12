@@ -188,7 +188,8 @@ const UserProfile = () => {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-around',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
               margin: '18px 0px',
               paddingTop: '30px',
             }}
@@ -211,10 +212,17 @@ const UserProfile = () => {
                 src={userProfile.user.pic}
                 alt="proImg"
               />
-              <h6 style={{ fontWeight: 'bold' }}>{userProfile.user.email}</h6>
+              <h6 style={{ fontWeight: 'bold', marginTop: '20px' }}>
+                {userProfile.user.email}
+              </h6>
             </div>
             <div style={{ marginLeft: '15px' }}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
                 <h5 style={{ margin: 0, marginRight: '15px' }}>
                   {userProfile.user.name}
                 </h5>
@@ -266,7 +274,13 @@ const UserProfile = () => {
               >
                 <span style={{ color: 'grey' }}>posts</span>
               </h6>
-              {userProfile.posts.length}
+              <span
+                data-target="followers"
+                className="modal-trigger"
+                style={{ fontSize: '16px', fontWeight: 'bold' }}
+              >
+                {userProfile.posts.length}
+              </span>
             </div>
             <div
               style={{

@@ -36,7 +36,7 @@ router.get('/getsubpost', requireLogin, (req, res) => {
 
 router.post('/createpost', requireLogin, (req, res) => {
   const { title, body, pic } = req.body;
-  if (!title || !body || !pic) {
+  if (!body || !pic) {
     return res.status(422).json({ error: 'Please add all the fields' });
   }
   // console.log(req.user)
@@ -152,6 +152,17 @@ router.delete('/deletepost/:id', requireLogin, (req, res) => {
           .catch((err) => console.log(err));
       }
     });
+});
+
+router.delete('/deletecomment/:id', requireLogin, (req, res) => {
+  Post.findOneAndUpdate(req.params.id, {
+    $pull: { comments: req.body.id },
+  }).exec((err, post) => {
+    if (err || !post) {
+      return res.status(422).json({ error: err });
+    }
+    console.log(post);
+  });
 });
 
 module.exports = router;

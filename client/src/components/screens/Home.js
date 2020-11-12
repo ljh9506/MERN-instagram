@@ -181,6 +181,30 @@ const Home = () => {
     }
   };
 
+  const deleteComment = (commentId, postId) => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm('정말 삭제하시겠습니까??') === true) {
+      fetch(`/deletecomment/${postId}`, {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+        },
+        body: JSON.stringify({
+          id: commentId,
+        }),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      return;
+    }
+    console.log(commentId, postId);
+  };
+
   const onChange = (e) => {
     console.log(e.target.value.length);
     if (e.target.value.length === 0) {
@@ -320,21 +344,34 @@ const Home = () => {
                               }}
                             />
                           </div>
-                          <h6
-                            key={comment._id}
-                            style={{ margin: '0 10px 0 0' }}
-                          >
-                            <span
-                              style={{
-                                fontWeight: 'bold',
-                                marginRight: '10px',
-                              }}
-                            >
-                              {comment.postedBy.name}
-                            </span>{' '}
-                            {comment.text}
-                          </h6>
                         </Link>
+                        <h6 key={comment._id} style={{ margin: '0 10px 0 0' }}>
+                          <span
+                            style={{
+                              fontWeight: 'bold',
+                              marginRight: '10px',
+                            }}
+                          >
+                            {comment.postedBy.name}
+                          </span>{' '}
+                          {comment.text}
+                          {/* {comment.postedBy._id === state._id && (
+                            <i
+                              className="material-icons"
+                              style={{
+                                color: 'grey',
+                                float: 'right',
+                                cursor: 'pointer',
+                                marginLeft: '20px',
+                              }}
+                              onClick={() =>
+                                deleteComment(comment._id, item._id)
+                              }
+                            >
+                              delete
+                            </i>
+                          )} */}
+                        </h6>
                       </div>
                     );
                   })}

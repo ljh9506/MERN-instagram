@@ -67,7 +67,7 @@ const Navbar = () => {
         </li>,
         <li key="4">
           <Link to="/followingposts" className="sidenav-close">
-            Following Posts
+            Following User's Posts
           </Link>
         </li>,
         <li key="5">
@@ -84,7 +84,8 @@ const Navbar = () => {
             }}
             style={{
               borderRadius: '30px',
-              marginLeft: '30px',
+              marginLeft: '25px',
+              marginTop: '20px',
             }}
           >
             Logout

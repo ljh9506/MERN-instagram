@@ -57,7 +57,9 @@ const Login = () => {
   return (
     <div className="mycard">
       <div className="card auth-card input-field">
-        <h2>Instagram</h2>
+        <h2 className="brand-logo" style={{ marginBottom: '30px' }}>
+          Instagram
+        </h2>
         <input
           name="email"
           type="text"
@@ -86,11 +88,15 @@ const Login = () => {
           }}
         />
         <button
-          className="btn-small waves-effect waves-light #64b5f6 blue darken-1"
+          className="waves-effect waves-light #64b5f6 blue darken-1"
           onClick={() => PostData()}
           style={{
             fontWeight: 'bold',
             width: '100%',
+            padding: '20px 40px',
+            color: '#fff',
+            border: 'none',
+            margin: '20px 0',
           }}
         >
           Login

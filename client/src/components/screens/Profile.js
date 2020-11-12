@@ -115,12 +115,52 @@ const Profile = () => {
               alignItems: 'center',
             }}
           >
-            <div>
+            <div style={{ position: 'relative' }}>
               <img
                 style={{ width: '80px', height: '80px', borderRadius: '80px' }}
                 src={state ? state.pic : 'loading'}
                 alt="proImg"
               />
+
+              <div
+                className="file-field input-field"
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  position: 'absolute',
+                  right: '-60px',
+                  bottom: '-10px',
+                }}
+              >
+                <div
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <i
+                    class="material-icons"
+                    style={{ color: 'black', marginRight: '0' }}
+                  >
+                    camera_alt
+                  </i>
+                  <span style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+                    Update Image
+                  </span>
+                  <input
+                    type="file"
+                    name="image"
+                    onChange={(e) => updatePhoto(e.target.files[0])}
+                  />
+                </div>
+                <div className="file-path-wrapper" style={{ opacity: '0' }}>
+                  <input className="file-path validate" />
+                </div>
+              </div>
             </div>
 
             {/* <div style={{ marginLeft: '15px' }}>
@@ -221,19 +261,6 @@ const Profile = () => {
               >
                 {state ? state.following.length : '0'}
               </span>
-            </div>
-          </div>
-          <div className="file-field input-field">
-            <div className="btn #64b5f6 blue darken-1">
-              <span>Update profile Image</span>
-              <input
-                type="file"
-                name="image"
-                onChange={(e) => updatePhoto(e.target.files[0])}
-              />
-            </div>
-            <div className="file-path-wrapper" style={{ opacity: '0' }}>
-              <input className="file-path validate" />
             </div>
           </div>
         </div>

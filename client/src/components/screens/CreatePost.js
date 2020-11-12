@@ -72,18 +72,18 @@ const CreatePost = () => {
         textAlign: 'center',
       }}
     >
-      <input
+      {/* <input
         name="title"
         type="text"
         value={title}
         placeholder="title"
         onChange={onChange}
-      />
+      /> */}
       <input
         name="body"
         type="text"
         value={body}
-        placeholder="body"
+        placeholder="내용"
         onChange={onChange}
       />
 
@@ -106,7 +106,13 @@ const CreatePost = () => {
       >
         Submit Post
       </button>
-      {loading ? '' : <Spinner />}
+      {loading ? (
+        ''
+      ) : (
+        <div className="spinner-container">
+          <Spinner />
+        </div>
+      )}
     </div>
   );
 };
