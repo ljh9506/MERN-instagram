@@ -168,7 +168,7 @@ const Navbar = () => {
           <div className="modal-content">
             <input
               type="text"
-              placeholder="Search User"
+              placeholder="Search User Email"
               value={search}
               onChange={(e) => fetchUser(e.target.value)}
               ref={searchFocus}
