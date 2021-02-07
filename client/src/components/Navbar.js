@@ -52,7 +52,7 @@ const Navbar = () => {
             >
               search
             </i>
-            <span>Find User</span>
+            <span style={{ color: '#000000' }}>Find User</span>
           </div>
         </li>,
         <li key="2">
@@ -85,7 +85,6 @@ const Navbar = () => {
             style={{
               borderRadius: '30px',
               marginLeft: '25px',
-              marginTop: '20px',
             }}
           >
             Logout

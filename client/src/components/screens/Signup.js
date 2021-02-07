@@ -83,93 +83,95 @@ const Signup = () => {
   return (
     <div className="mycard">
       <div className="card auth-card input-field">
-        <h2 className="brand-logo" style={{ marginBottom: '30px' }}>
-          Instagram
-        </h2>
-        <input
-          name="name"
-          type="text"
-          placeholder="name"
-          value={name}
-          onChange={onChange}
-          style={{
-            maxWidth: '300px',
-            backgroundColor: '#fafafa',
-            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
-            marginBottom: '14px',
-            paddingLeft: '12px',
-          }}
-        />
-        <input
-          name="email"
-          type="text"
-          placeholder="email"
-          value={email}
-          onChange={onChange}
-          style={{
-            maxWidth: '300px',
-            backgroundColor: '#fafafa',
-            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
-            marginBottom: '14px',
-            paddingLeft: '12px',
-          }}
-        />
-        <input
-          name="password"
-          type="text"
-          placeholder="password"
-          value={password}
-          onChange={onChange}
-          style={{
-            maxWidth: '300px',
-            backgroundColor: '#fafafa',
-            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
-            marginBottom: '14px',
-            paddingLeft: '12px',
-          }}
-        />
-        <div className="file-field input-field">
-          <div className="btn #64b5f6 blue darken-1">
-            <span>profile Image</span>
-            <input
-              type="file"
-              name="image"
-              onChange={(e) => setImage(e.target.files[0])}
-              style={{ maxWidth: '100px !important' }}
-            />
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" />
-          </div>
-        </div>
-        <button
-          className="waves-effect waves-light #64b5f6 blue darken-1"
-          onClick={() => PostData()}
-          style={{
-            fontWeight: 'bold',
-            width: '100%',
-            padding: '20px 40px',
-            color: '#fff',
-            border: 'none',
-            margin: '10px 0',
-          }}
-        >
-          Signup
-        </button>
-        <div>
-          <Link
-            to="/login"
+        <div style={{ maxWidth: '312px' }}>
+          <h2 className="brand-logo" style={{ marginBottom: '30px' }}>
+            Instagram
+          </h2>
+          <input
+            name="name"
+            type="text"
+            placeholder="name"
+            value={name}
+            onChange={onChange}
             style={{
-              marginTop: '20px',
-              display: 'block',
-              padding: '20px 70px',
-              border: '1px solid lightgrey',
+              maxWidth: '300px',
+              backgroundColor: '#fafafa',
+              border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
               marginBottom: '14px',
+              paddingLeft: '12px',
+            }}
+          />
+          <input
+            name="email"
+            type="text"
+            placeholder="email"
+            value={email}
+            onChange={onChange}
+            style={{
+              maxWidth: '300px',
+              backgroundColor: '#fafafa',
+              border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+              marginBottom: '14px',
+              paddingLeft: '12px',
+            }}
+          />
+          <input
+            name="password"
+            type="text"
+            placeholder="password"
+            value={password}
+            onChange={onChange}
+            style={{
+              maxWidth: '300px',
+              backgroundColor: '#fafafa',
+              border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+              marginBottom: '14px',
+              paddingLeft: '12px',
+            }}
+          />
+          <div className="file-field input-field">
+            <div className="btn #64b5f6 blue darken-1">
+              <span>profile Image</span>
+              <input
+                type="file"
+                name="image"
+                onChange={(e) => setImage(e.target.files[0])}
+                style={{ maxWidth: '100px !important' }}
+              />
+            </div>
+            <div className="file-path-wrapper">
+              <input className="file-path validate" />
+            </div>
+          </div>
+          <button
+            className="waves-effect waves-light #64b5f6 blue darken-1"
+            onClick={() => PostData()}
+            style={{
               fontWeight: 'bold',
+              width: '100%',
+              padding: '20px 40px',
+              color: '#fff',
+              border: 'none',
+              margin: '10px 0',
             }}
           >
-            Already have an account?
-          </Link>
+            Signup
+          </button>
+          <div>
+            <Link
+              to="/login"
+              style={{
+                marginTop: '20px',
+                display: 'block',
+                padding: '20px 70px',
+                border: '1px solid lightgrey',
+                marginBottom: '14px',
+                fontWeight: 'bold',
+              }}
+            >
+              Already have an account?
+            </Link>
+          </div>
         </div>
       </div>
     </div>

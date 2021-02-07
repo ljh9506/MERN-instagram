@@ -57,74 +57,77 @@ const Login = () => {
   return (
     <div className="mycard">
       <div className="card auth-card input-field">
-        <h2 className="brand-logo" style={{ marginBottom: '30px' }}>
-          Instagram
-        </h2>
-        <input
-          name="email"
-          type="text"
-          placeholder="email"
-          value={email}
-          onChange={onChange}
-          style={{
-            maxWidth: '300px',
-            backgroundColor: '#fafafa',
-            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
-            paddingLeft: '12px',
-            marginBottom: '14px',
-          }}
-        />
-        <input
-          name="password"
-          type="text"
-          placeholder="password"
-          value={password}
-          onChange={onChange}
-          style={{
-            maxWidth: '300px',
-            backgroundColor: '#fafafa',
-            border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
-            paddingLeft: '12px',
-          }}
-        />
-        <button
-          className="waves-effect waves-light #64b5f6 blue darken-1"
-          onClick={() => PostData()}
-          style={{
-            fontWeight: 'bold',
-            width: '100%',
-            padding: '20px 40px',
-            color: '#fff',
-            border: 'none',
-            margin: '20px 0',
-          }}
-        >
-          Login
-        </button>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-          }}
-        >
-          <h6>
-            <Link to="/reset">Forgot the Password?</Link>
-          </h6>
+        <div style={{ maxWidth: '312px' }}>
+          <h2 className="brand-logo" style={{ marginBottom: '30px' }}>
+            Instagram
+          </h2>
+          <input
+            name="email"
+            type="text"
+            placeholder="email"
+            value={email}
+            onChange={onChange}
+            style={{
+              maxWidth: '300px',
+              backgroundColor: '#fafafa',
+              border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+              paddingLeft: '12px',
+              marginBottom: '14px',
+            }}
+          />
+          <input
+            name="password"
+            type="text"
+            placeholder="password"
+            value={password}
+            onChange={onChange}
+            style={{
+              maxWidth: '300px',
+              backgroundColor: '#fafafa',
+              border: '1px solid rgba(var(--b6a, 219, 219, 219), 1)',
+              paddingLeft: '12px',
+              overflow: 'hidden',
+            }}
+          />
+          <button
+            className="waves-effect waves-light #64b5f6 blue darken-1"
+            onClick={() => PostData()}
+            style={{
+              fontWeight: 'bold',
+              width: '100%',
+              padding: '20px 40px',
+              color: '#fff',
+              border: 'none',
+              margin: '20px 0',
+            }}
+          >
+            Login
+          </button>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
+            <h6>
+              <Link to="/reset">Forgot the Password?</Link>
+            </h6>
 
-          <div>
-            <Link
-              to="/signup"
-              style={{
-                marginTop: '20px',
-                display: 'block',
-                padding: '20px 80px',
-                border: '1px solid lightgrey',
-                fontWeight: 'bold',
-              }}
-            >
-              Don't have an account?
-            </Link>
+            <div>
+              <Link
+                to="/signup"
+                style={{
+                  marginTop: '20px',
+                  display: 'block',
+                  padding: '20px 80px',
+                  border: '1px solid lightgrey',
+                  fontWeight: 'bold',
+                }}
+              >
+                Don't have an account?
+              </Link>
+            </div>
           </div>
         </div>
       </div>
