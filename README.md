@@ -7,7 +7,7 @@ React와 Express.js로 풀스택 개발한 Instagram Clone 사이트입니다.
 메일을 통한 비밀번호찾기, 무한스크롤 기능을 적용하였습니다.
 ```
 
-### 사용한 플러그인
+### 사용한 기술
 ```
 - React.js
 - Context-API
@@ -22,6 +22,4 @@ React와 Express.js로 풀스택 개발한 Instagram Clone 사이트입니다.
 ```
 
 ### portfolio site
-```
 https://react-insta1949.herokuapp.com/
-```
