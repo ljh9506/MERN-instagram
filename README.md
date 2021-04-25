@@ -23,5 +23,5 @@ React와 Express.js로 풀스택 개발한 Instagram Clone 사이트입니다.
 
 ### portfolio site
 ```
-https://react-shop-1949.herokuapp.com/
+https://react-insta1949.herokuapp.com/
 ```
